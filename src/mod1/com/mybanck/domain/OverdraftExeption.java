@@ -1,5 +1,9 @@
 package mod1.com.mybanck.domain;
 
+
+/**
+ * Exception for  situations where funds are insufficient.
+ */
 public class OverdraftExeption extends Exception {
     private double deficit;
 
