@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Bank {
     private List<Cunstomer> cunstomers = new ArrayList<>();
-    private int numClient = 0;
+    private static int numClient = 0;
     private static Bank bank = new Bank();
 
     private Bank() {
