@@ -1,14 +1,19 @@
 package mod1.com.mybanck.domain;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
-    private List<Cunstomer> cunstomers;
-    private int maxCunstomer = 1_000;
+    private List<Cunstomer> cunstomers = new ArrayList<>();
+    private int numClient = 0;
+    private static Bank bank = new Bank();
 
-    public Bank() {
-        this.cunstomers = new ArrayList<>(maxCunstomer);
+    private Bank() {
+    }
+
+    public static Bank getBank(){
+        return bank;
     }
 
     public Cunstomer getCunstomer(int custNo){
@@ -18,7 +23,7 @@ public class Bank {
     }
 
     public void addCunstomer(Cunstomer newCunstomer){
-        if (cunstomers.size() <= maxCunstomer)
         cunstomers.add(newCunstomer);
+        numClient++;
     }
 }

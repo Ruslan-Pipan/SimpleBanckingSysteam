@@ -7,7 +7,7 @@ import mod1.com.mybanck.domain.SavingAccount;
 
 public class TestBank {
     public static void main(String[] args) {
-        Bank bank = new Bank();
+        Bank bank = Bank.getBank();
         Cunstomer cunstomer1 = new Cunstomer("John Doe");
         Cunstomer cunstomer2 = new Cunstomer("Ruslan Pipan");
 
