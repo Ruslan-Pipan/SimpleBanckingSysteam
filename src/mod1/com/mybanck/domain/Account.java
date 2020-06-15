@@ -1,5 +1,7 @@
 package mod1.com.mybanck.domain;
 
+
+
 public class Account {
 
     protected double balance;

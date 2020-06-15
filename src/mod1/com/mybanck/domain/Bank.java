@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
-    private List<Cunstomer> cunstomers = new ArrayList<>();
+    private List<Cunsumers> cunstomers = new ArrayList<>();
     private static int numClient = 0;
     private static Bank bank = new Bank();
 
@@ -16,13 +16,13 @@ public class Bank {
         return bank;
     }
 
-    public Cunstomer getCunstomer(int custNo){
+    public Cunsumers getCunstomer(int custNo){
         if (custNo < cunstomers.size())
             return cunstomers.get(custNo);
         return null;
     }
 
-    public void addCunstomer(Cunstomer newCunstomer){
+    public void addCunstomer(Cunsumers newCunstomer){
         cunstomers.add(newCunstomer);
         numClient++;
     }

@@ -1,15 +1,12 @@
 package mod1.test;
 
-import mod1.com.mybanck.domain.Bank;
-import mod1.com.mybanck.domain.CheckingAccount;
-import mod1.com.mybanck.domain.Cunstomer;
-import mod1.com.mybanck.domain.SavingAccount;
+import mod1.com.mybanck.domain.*;
 
 public class TestBank {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BadVerification {
         Bank bank = Bank.getBank();
-        Cunstomer cunstomer1 = new Cunstomer("John Doe");
-        Cunstomer cunstomer2 = new Cunstomer("Ruslan Pipan");
+        Cunsumers cunstomer1 = new Cunsumers.Cunsumer("Ruslan", "Pipan").setAdress("Krovinka").setNumber("380686536489").build();
+        Cunsumers cunstomer2 = new Cunsumers.Cunsumer("Oleg", "Xolod").setNumber("3806848864").build();
 
         SavingAccount savingCunstumer2 = new SavingAccount(1000,7);
         CheckingAccount checkingCunstumer1 = new CheckingAccount(500,100);

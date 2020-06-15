@@ -1,5 +1,7 @@
 package mod1.com.mybanck.domain;
 
+
+
 public class CheckingAccount extends Account {
     private double overdraftAmount;
 
