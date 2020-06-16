@@ -1,11 +1,12 @@
 package mod1.com.mybanck.domain;
 
 
+import java.io.Serializable;
 
-public class Account {
+public class Account implements Serializable {
 
     protected double balance;
-
+    private static final long serialVersionUID = 1L;
     /**
      * Conctructor that provides initial balance
      * @param  balance a must be positive

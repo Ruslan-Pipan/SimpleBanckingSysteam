@@ -1,9 +1,11 @@
 package mod1.com.mybanck.domain;
 
 
+import java.io.Serializable;
 
-public class CheckingAccount extends Account {
+public class CheckingAccount extends Account implements Serializable {
     private double overdraftAmount;
+    private static final long serialVersionUID = 1L;
 
     public CheckingAccount(double balance, double overdraftAmount) {
         this.balance = balance;
