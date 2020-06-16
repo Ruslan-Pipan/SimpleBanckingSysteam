@@ -17,7 +17,7 @@ public class Verification {
     }
 
     public static boolean verifyPhoneNumber(String number){
-        String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+        String regex = "(\\s*)?(\\+)?([- _():=+]?\\d[- _():=+]?){10,14}(\\s*)?$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(number);
         return matcher.matches();
