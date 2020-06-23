@@ -1,4 +1,4 @@
-package mod1.com.mybanck.domain;
+package mod1.com.mybanck.domain.bankException;
 
 
 /**
