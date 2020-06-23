@@ -1,5 +1,8 @@
 package mod1.com.mybanck.domain;
 
+import loger.BadLog;
+import loger.GoodLog;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +16,10 @@ public class Verification {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
+        if (matcher.matches())
+            GoodLog.getInstance().log("Good email");
+        else
+            BadLog.getInstance().log("Bad email.");
         return matcher.matches();
     }
 
@@ -20,6 +27,10 @@ public class Verification {
         String regex = "(\\s*)?(\\+)?([- _():=+]?\\d[- _():=+]?){10,14}(\\s*)?$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(number);
+        if (matcher.matches())
+            GoodLog.getInstance().log("Good number.");
+        else
+            BadLog.getInstance().log("Bad number.");
         return matcher.matches();
     }
 }
