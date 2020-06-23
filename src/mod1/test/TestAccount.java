@@ -1,8 +1,8 @@
 package mod1.test;
 
-import mod1.com.mybanck.domain.Account;
-import mod1.com.mybanck.domain.CheckingAccount;
-import mod1.com.mybanck.domain.OverdraftExeption;
+import mod1.com.mybanck.domain.accounts.Account;
+import mod1.com.mybanck.domain.accounts.CheckingAccount;
+import mod1.com.mybanck.domain.bankException.OverdraftExeption;
 
 public class TestAccount {
     public static void main(String[] args) {
