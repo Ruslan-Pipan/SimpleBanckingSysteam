@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 class Loger {
     private  String color;
     private static File file = new File("D:\\Навчання\\SimpleStsteamBanck\\src\\logs\\test.html");
+
     protected Loger(String color){
         this.color = color;
     }
@@ -20,5 +21,6 @@ class Loger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
