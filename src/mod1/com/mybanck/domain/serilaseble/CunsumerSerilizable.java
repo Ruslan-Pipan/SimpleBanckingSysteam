@@ -3,7 +3,7 @@ package mod1.com.mybanck.domain.serilaseble;
 import com.sun.istack.internal.NotNull;
 import loger.BadLog;
 import loger.GoodLog;
-import mod1.com.mybanck.domain.Consumers;
+import mod1.com.mybanck.domain.Consumer;
 
 import java.io.*;
 
@@ -11,7 +11,7 @@ public class CunsumerSerilizable {
 
     private CunsumerSerilizable(){}
 
-    public static boolean serializationConsumer(@NotNull String path, Consumers cunstomer){
+    public static boolean serializationConsumer(@NotNull String path, Consumer cunstomer){
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path))){
             outputStream.writeObject(cunstomer);
             outputStream.flush();
@@ -23,7 +23,7 @@ public class CunsumerSerilizable {
         return false;
     }
 
-    public static boolean serializationConsumer(@NotNull File path, Consumers cunstomer){
+    public static boolean serializationConsumer(@NotNull File path, Consumer cunstomer){
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path))){
             outputStream.writeObject(cunstomer);
             outputStream.flush();

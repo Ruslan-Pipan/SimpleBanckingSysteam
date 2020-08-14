@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
-    private List<Consumers> consumers = new ArrayList<>();
+    private List<Consumer> consumers = new ArrayList<>();
     private static int numClient = 0;
     private static Bank bank = new Bank();
 
@@ -20,7 +20,7 @@ public class Bank {
         return bank;
     }
 
-    public Consumers getCunstomer(int custNo){
+    public Consumer getCunstomer(int custNo){
         if (custNo < consumers.size()){
             GoodLog.getInstance().log("Get consumer id:" + custNo);
             return consumers.get(custNo);
@@ -29,7 +29,7 @@ public class Bank {
         return null;
     }
 
-    public void addConsumer(Consumers newConsumer){
+    public void addConsumer(Consumer newConsumer){
         consumers.add(newConsumer);
         numClient++;
         GoodLog.getInstance().log("Consumer add in system under the number" + numClient);

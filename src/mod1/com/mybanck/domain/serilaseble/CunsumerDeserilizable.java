@@ -3,18 +3,18 @@ package mod1.com.mybanck.domain.serilaseble;
 import com.sun.istack.internal.NotNull;
 import loger.BadLog;
 import loger.GoodLog;
-import mod1.com.mybanck.domain.Consumers;
+import mod1.com.mybanck.domain.Consumer;
 
 import java.io.*;
 
 public class CunsumerDeserilizable {
     private CunsumerDeserilizable(){}
 
-    public static Consumers deserializationCunstomer(@NotNull String path){
+    public static Consumer deserializationCunstomer(@NotNull String path){
         File file = new File(path);
         try (ObjectInputStream outputStream = new ObjectInputStream(new FileInputStream(path))){
             GoodLog.getInstance().log("Deserialization god.");
-            return(Consumers) outputStream.readObject();
+            return(Consumer) outputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -22,10 +22,10 @@ public class CunsumerDeserilizable {
         return null;
     }
 
-    public static Consumers deserializationCunstomer(@NotNull File path){
+    public static Consumer deserializationCunstomer(@NotNull File path){
         try (ObjectInputStream outputStream = new ObjectInputStream(new FileInputStream(path))){
             GoodLog.getInstance().log("Deserialization god.");
-            return(Consumers) outputStream.readObject();
+            return(Consumer) outputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

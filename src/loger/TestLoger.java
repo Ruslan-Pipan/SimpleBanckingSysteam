@@ -9,8 +9,8 @@ import mod1.com.mybanck.domain.bankException.DontInitialisation;
 public class TestLoger {
     public static void main(String[] args) throws BadVerification, DontInitialisation {
         Bank bank = Bank.getBank();
-        Consumers cunstomer1 = new Consumers.Cunsumer("Ruslan", "Pipan").setAdress("Krovinka").setNumber("380686536489").build();
-        Consumers cunstomer2 = new Consumers.Cunsumer("Oleg", "Xolod").setNumber("380686536489").build();
+        Consumer cunstomer1 = new Consumer.CunsumerBild("Ruslan", "Pipan").setAdress("Krovinka").setNumber("380686536489").build();
+        Consumer cunstomer2 = new Consumer.CunsumerBild("Oleg", "Xolod").setNumber("380686536489").build();
 
         SavingAccount savingCunstumer2 = new SavingAccount(1000,7);
         CheckingAccount checkingCunstumer1 = new CheckingAccount(500,100);
