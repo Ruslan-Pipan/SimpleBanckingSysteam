@@ -5,6 +5,7 @@ import loger.GoodLog;
 import mod1.com.mybanck.domain.accounts.Account;
 import mod1.com.mybanck.domain.bankException.BadVerification;
 import mod1.com.mybanck.domain.bankException.DontInitialisation;
+import sun.security.util.Password;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.util.List;
  * Cunsumers Main class, have in itself class Builder.
  * Builder - help to create.
  * */
-public class Consumers implements Serializable {
+public class Consumer implements Serializable {
     private static final long serialVersionUID = 1L;
     private List<Account> accounts = new ArrayList<>();
     private LocalDate date;
@@ -25,16 +26,18 @@ public class Consumers implements Serializable {
     private String phonNumber;
     private String adress;
     private String email;
+    private String password;
 
     private int custumerNumber;
     private static int custumerNumberBase = 1000;
 
-    private Consumers(Cunsumer bild) {
+    private Consumer(CunsumerBild bild) {
         this.firstName = bild.firstName;
         this.lastName = bild.lastName;
         this.phonNumber = bild.phonNumber;
         this.adress = bild.adress;
         this.email = bild.email;
+        this.password = bild.password;
         this.custumerNumber = custumerNumberBase+1;
         GoodLog.getInstance().log("Create Consumer.");
     }
@@ -92,20 +95,21 @@ public class Consumers implements Serializable {
     /**
      * Class  bilder for cunsumer.
      * */
-    public static class Cunsumer{
+    public static class CunsumerBild {
         private String phonNumber;
         private String adress;
         private String email;
         private String firstName;
         private String lastName;
+        private String password;
 
-        public Cunsumer(String firstName, String lastName) {
+        public CunsumerBild(String firstName, String lastName) {
             this.firstName = firstName;
             this.lastName = lastName;
 
         }
 
-        public Cunsumer setNumber(String phonNumber) throws BadVerification {
+        public CunsumerBild setNumber(String phonNumber) throws BadVerification {
             if (Verification.verifyPhoneNumber(phonNumber)){
                 this.phonNumber = phonNumber;
                 GoodLog.getInstance().log(this.firstName + " " + this.lastName + "Add phone number.");
@@ -115,13 +119,13 @@ public class Consumers implements Serializable {
             throw new BadVerification("Number dont set, bad number.");
         }
 
-        public Cunsumer setAdress(String adress) {
+        public CunsumerBild setAdress(String adress) {
             this.adress = adress;
             GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add adress.");
             return this;
         }
 
-        public Cunsumer setEmail(String email) throws BadVerification {
+        private CunsumerBild setEmail(String email) throws BadVerification {
             if (Verification.verifyEmail(email)){
                 this.email = email;
                 GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add email.");
@@ -131,23 +135,34 @@ public class Consumers implements Serializable {
             throw new BadVerification("Email dont set, bad email.");
         }
 
-        public Consumers build(){
+        private CunsumerBild setPass(String password) throws BadVerification {
+            if (Verification.verifyPassword(password)){
+                this.password = password;
+                GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add password.");
+                return this;
+            }
+            BadLog.getInstance().log("Password dont set, bad password.");
+            throw new BadVerification("Password dont set, bad password.");
+        }
+
+        public Consumer build(){
             GoodLog.getInstance().log("Return consumer build.");
-            return new Consumers(this);
+            return new Consumer(this);
         }
 
     }
 
     @Override
     public String toString() {
-        GoodLog.getInstance().log("Consumer toString.");
-        return "Cunsumers{" +
+        return "Consumer{" +
                 "accounts=" + accounts +
                 ", date=" + date +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", number='" + phonNumber + '\'' +
+                ", phonNumber='" + phonNumber + '\'' +
                 ", adress='" + adress + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", custumerNumber=" + custumerNumber +
                 '}';
     }
