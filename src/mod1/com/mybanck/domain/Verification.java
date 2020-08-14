@@ -33,4 +33,15 @@ public class Verification {
             BadLog.getInstance().log("Bad number.");
         return matcher.matches();
     }
+
+    public static boolean verifyPassword(String pass){
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(pass);
+        if (matcher.matches())
+            GoodLog.getInstance().log("Good pass.");
+        else
+            BadLog.getInstance().log("Bad pass.");
+        return matcher.matches();
+    }
 }
