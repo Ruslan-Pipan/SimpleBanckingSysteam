@@ -71,7 +71,7 @@ public class Consumer implements Serializable {
             return phonNumber;
         }
         BadLog.getInstance().log("Phone Number dont initialisation.");
-        throw new DontInitialisation("Phone Number dont initialisation.");
+        return "";
     }
 
     public String getAdress() throws DontInitialisation {
@@ -80,7 +80,7 @@ public class Consumer implements Serializable {
             return adress;
         }
         BadLog.getInstance().log("Adress dont initialisation.");
-        throw new DontInitialisation("Adress dont initialisation.");
+        return "";
     }
 
     public String getEmail() throws DontInitialisation {
@@ -89,7 +89,16 @@ public class Consumer implements Serializable {
             return email;
         }
         BadLog.getInstance().log("Email dont initialisation.");
-        throw new DontInitialisation("Email dont initialisation.");
+        return "";
+    }
+
+    public String getPassword() {
+        if (password!= null){
+            GoodLog.getInstance().log("Get email.");
+            return password;
+        }
+        BadLog.getInstance().log("Email dont initialisation.");
+        return "";
     }
 
     /**
@@ -125,7 +134,7 @@ public class Consumer implements Serializable {
             return this;
         }
 
-        private CunsumerBild setEmail(String email) throws BadVerification {
+        public CunsumerBild setEmail(String email) throws BadVerification {
             if (Verification.verifyEmail(email)){
                 this.email = email;
                 GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add email.");
@@ -135,7 +144,7 @@ public class Consumer implements Serializable {
             throw new BadVerification("Email dont set, bad email.");
         }
 
-        private CunsumerBild setPass(String password) throws BadVerification {
+        public CunsumerBild setPass(String password) throws BadVerification {
             if (Verification.verifyPassword(password)){
                 this.password = password;
                 GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add password.");
