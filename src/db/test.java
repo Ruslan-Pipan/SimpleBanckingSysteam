@@ -2,17 +2,13 @@ package db;
 
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class test {
-    public static void main(String[] args) {
-        try (Connection conn = ConnectionBank.conn();){
-            System.out.print("Ok");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
     }
 
 }
