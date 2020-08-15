@@ -1,0 +1,21 @@
+package db.consumer.select;
+
+
+public class SelectByName extends Select{
+
+    private  String name;
+    private  String lasts_name;
+
+    private  String sql = "Select * FROM consumer WHERE first_name = '" + name + "' AND last_name = '" + lasts_name +"'";
+
+
+    public SelectByName(String name, String lasts_name) {
+        this.name = name;
+        this.lasts_name = lasts_name;
+    }
+
+    @Override
+    public void select() {
+        resultDefolt(sql);
+    }
+}
