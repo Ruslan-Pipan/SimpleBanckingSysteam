@@ -8,7 +8,7 @@ import mod1.com.mybanck.domain.bankException.OverdraftExeption;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-
+    protected String bankAccount;
     protected double balance;
     private static final long serialVersionUID = 1L;
     /**
