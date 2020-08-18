@@ -22,13 +22,13 @@ public class Front {
 
         while (flag){
             value = scanner.nextLine();
-            Select select;
+
             switch (value){
                 case "0":
                     flag = false;
                     break;
                 case "1":
-                    select = new SekectAll();
+                    Select select = new SekectAll();
                     select.select();
                     break;
                 case "2":
@@ -37,12 +37,10 @@ public class Front {
                     insert.insert(con);
                     break;
                 case "3":
-                    select = new SelectByID(2);
-                    select.select();
+                    enteringId();
                     break;
                 case "4":
-                    select = new SelectByName("Oleg","Xolod");
-                    select.select();
+                    eteringAName();
                     break;
                 default:
                     System.out.println("Bad value");
@@ -84,6 +82,25 @@ public class Front {
         String adress = scanner.nextLine();
 
         return new Consumer.CunsumerBild(first_name,last_name).setNumber(phone_number).setEmail(email).setAdress(adress).setPass(password).build();
+    }
+
+    private static void eteringAName(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter last name: ");
+        String lastName = scanner.nextLine();
+
+        Select select = new SelectByName(name,lastName);
+        select.select();
+    }
+
+    private static void enteringId(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter id: ");
+        int id = scanner.nextInt();
+        Select select = new SelectByID(id);
+        select.select();
     }
 
 }
