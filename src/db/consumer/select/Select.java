@@ -1,10 +1,7 @@
 package db.consumer.select;
 
-import com.sun.rowset.CachedRowSetImpl;
 import db.ConnectionBank;
 
-import javax.sql.RowSet;
-import javax.sql.rowset.CachedRowSet;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,12 +17,9 @@ public abstract class Select {
                ResultSet resultSet = statement.executeQuery(sql)
           ) {
 
+               System.out.println("id | \t Name \t\t Last Name \t\t Email \t\t\t\t Phone Number \t\t Password \t\t\t Adress1 \n\n");
                resultSet.next();
 
-               CachedRowSet cachedRowSet = new CachedRowSetImpl();
-               cachedRowSet.populate(resultSet);
-
-               System.out.println("id | \t Name \t\t Last Name \t\t Email \t\t\t\t Phone Number \t\t Password \t\t\t Adress1 \n\n");
                int id = resultSet.getInt(1);
                String firstName = resultSet.getNString(2);
                String lastName = resultSet.getNString(3);
@@ -35,7 +29,7 @@ public abstract class Select {
                String adress = resultSet.getNString(7);
 
 
-               System.out.println(id + "\t\t" + firstName + ",\t\t" + lastName + ",\t\t" + email + ",\t\t" + phoneNumber + ",\t\t" + password + ",\t\t" + adress );
+               System.out.println(id + "\t\t" + firstName + ",\t\t" + lastName + ",\t\t" + email + ",\t\t" + phoneNumber + ",\t\t" + password + ",\t\t" + adress);
           } catch (SQLException | ClassNotFoundException throwables) {
                throwables.printStackTrace();
           }
