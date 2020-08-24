@@ -1,6 +1,7 @@
 package mod1.com.mybanck.domain.accounts;
 
 
+import db.account.GenerateBankAcc;
 import loger.BadLog;
 import loger.GoodLog;
 import mod1.com.mybanck.domain.bankException.OverdraftExeption;
@@ -8,9 +9,12 @@ import mod1.com.mybanck.domain.bankException.OverdraftExeption;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-    protected String bankAccount;
+    private static final int version = 0;
+    protected long bankAccount;
     protected double balance;
     private static final long serialVersionUID = 1L;
+
+
     /**
      * Conctructor that provides initial balance
      * @param  balance a must be positive
@@ -22,9 +26,11 @@ public class Account implements Serializable {
         }else {
             this.balance = 0;
         }
+        this.bankAccount = GenerateBankAcc.generate();
     }
     public Account(){
-        balance = 0;
+        this.balance = 0;
+        this.bankAccount = GenerateBankAcc.generate();
     }
 
     /**
@@ -58,6 +64,9 @@ public class Account implements Serializable {
     public double getBalance() {
         GoodLog.getInstance().log("Return balancs");
         return balance;
+    }
+    public long getBankAccount() {
+        return bankAccount;
     }
 
     @Override
