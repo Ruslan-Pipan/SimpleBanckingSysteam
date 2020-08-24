@@ -1,15 +1,14 @@
 package db.consumer.select;
 
 import db.ConnectionBank;
+import db.Select;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class Select {
-
-     abstract public void  select();
+abstract class SelectDefault implements Select {
 
      protected static void resultDefolt(String sql){
           try (Connection connection = ConnectionBank.getConn();
