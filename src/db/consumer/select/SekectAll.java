@@ -1,13 +1,14 @@
 package db.consumer.select;
 
 import db.ConnectionBank;
+import db.Select;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SekectAll extends Select{
+public class SekectAll extends SelectDefault{
 
     @Override
     public void select() {
