@@ -1,14 +1,15 @@
-package db;
+package db.TEST;
 
 
-import java.sql.Connection;
-import java.sql.ResultSet;
+import db.account.GenerateBankAcc;
+
+
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class test {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
+        System.out.println(GenerateBankAcc.generate());
     }
 
 }
