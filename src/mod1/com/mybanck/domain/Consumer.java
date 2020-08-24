@@ -21,6 +21,7 @@ public class Consumer implements Serializable {
     private List<Account> accounts = new ArrayList<>();
     private LocalDate date;
 
+    private int id;
     private String firstName;
     private String lastName;
     private String phonNumber;
@@ -39,6 +40,7 @@ public class Consumer implements Serializable {
         this.email = bild.email;
         this.password = bild.password;
         this.custumerNumber = custumerNumberBase+1;
+        addAccount(new Account());
         GoodLog.getInstance().log("Create Consumer.");
     }
 
@@ -99,6 +101,14 @@ public class Consumer implements Serializable {
         }
         BadLog.getInstance().log("Email dont initialisation.");
         return "";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
