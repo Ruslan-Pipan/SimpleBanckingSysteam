@@ -1,6 +1,7 @@
 package mod1.com.mybanck.domain.accounts;
 
 
+import db.account.GenerateBankAcc;
 import loger.BadLog;
 import loger.GoodLog;
 import mod1.com.mybanck.domain.accounts.Account;
@@ -9,11 +10,14 @@ import mod1.com.mybanck.domain.bankException.OverdraftExeption;
 import java.io.Serializable;
 
 public class CheckingAccount extends Account implements Serializable {
+    private static final int version = 1;
+
     private double overdraftAmount;
     private static final long serialVersionUID = 1L;
 
     public CheckingAccount(double balance, double overdraftAmount) {
         this.balance = balance;
+        this.bankAccount = GenerateBankAcc.generate();
         this.overdraftAmount = overdraftAmount;
         GoodLog.getInstance().log("Create CheckingAccount.");
     }
