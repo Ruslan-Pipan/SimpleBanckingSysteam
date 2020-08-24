@@ -1,7 +1,9 @@
 package db.consumer.select;
 
 
-public class SelectByID extends Select{
+import db.Select;
+
+public class SelectByID extends SelectDefault{
     private  int id;
     private String sql;
 
