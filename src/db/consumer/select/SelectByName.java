@@ -1,7 +1,9 @@
 package db.consumer.select;
 
 
-public class SelectByName extends Select{
+import db.Select;
+
+public class SelectByName extends SelectDefault{
 
     private  String name;
     private  String lasts_name;
