@@ -1,20 +1,22 @@
 package front;
 
-import db.consumer.insert.Insert;
+import db.Insert;
+import db.Select;
+import db.consumer.insert.InsertCunsumer;
 import db.consumer.select.SekectAll;
-import db.consumer.select.Select;
 import db.consumer.select.SelectByID;
 import db.consumer.select.SelectByName;
 import mod1.com.mybanck.domain.Consumer;
 import mod1.com.mybanck.domain.bankException.BadVerification;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Front {
 
     private static boolean flag = true;
 
-    public static void main(String[] args) throws BadVerification {
+    public static void main(String[] args) throws BadVerification, SQLException {
 
         Scanner scanner = new Scanner(System.in);
         String value;
@@ -33,7 +35,7 @@ public class Front {
                     break;
                 case "2":
                     Consumer con = createConsumer();
-                    Insert insert = new Insert();
+                    Insert insert = new InsertCunsumer();
                     insert.insert(con);
                     break;
                 case "3":
