@@ -7,7 +7,7 @@ import mod1.com.mybanck.domain.Consumer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 abstract class InsertDefault implements Insert {
 
