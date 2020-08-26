@@ -11,7 +11,7 @@ public class TestInsert {
 
 
         Insert insert = new InsertCunsumer();
-        Consumer consumer = new Consumer.CunsumerBild("Test16","Tets16").setEmail("tests19@gmail.com").setNumber("30816161619").setPass("Tetst77777").build();
+        Consumer consumer = new Consumer.CunsumerBild("Test2","Tets17").setEmail("tests20@gmail.com").setNumber("30820161619").setPass("Tetst77777").build();
         System.out.println(consumer.getId());
         insert.insert(consumer);
         System.out.println(consumer.getId());
