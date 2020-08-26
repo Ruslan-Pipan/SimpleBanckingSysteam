@@ -30,9 +30,10 @@ public class Consumer implements Serializable {
     private String password;
 
     private int custumerNumber;
-    private static int custumerNumberBase = 1000;
+    private static int custumerNumberBase = 100;
 
     private Consumer(CunsumerBild bild) {
+        this.id = bild.id;
         this.firstName = bild.firstName;
         this.lastName = bild.lastName;
         this.phonNumber = bild.phonNumber;
@@ -115,6 +116,7 @@ public class Consumer implements Serializable {
      * Class  bilder for cunsumer.
      * */
     public static class CunsumerBild {
+        private int id;
         private String phonNumber;
         private String adress;
         private String email;
@@ -163,6 +165,10 @@ public class Consumer implements Serializable {
             BadLog.getInstance().log("Password dont set, bad password.");
             throw new BadVerification("Password dont set, bad password.");
         }
+        public CunsumerBild setId(int id){
+            this.id = id;
+            return this;
+        }
 
         public Consumer build(){
             GoodLog.getInstance().log("Return consumer build.");
@@ -176,6 +182,7 @@ public class Consumer implements Serializable {
         return "Consumer{" +
                 "accounts=" + accounts +
                 ", date=" + date +
+                ", id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phonNumber='" + phonNumber + '\'' +
