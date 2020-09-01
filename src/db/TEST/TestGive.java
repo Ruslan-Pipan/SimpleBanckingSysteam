@@ -1,11 +1,10 @@
 package db.TEST;
 
-import db.consumer.give.GiveById;
 import db.consumer.give.GiveCunsumer;
 
 public class TestGive {
     public static void main(String[] args) {
-        GiveCunsumer giveCunsumer = new GiveById(4);
+        GiveCunsumer giveCunsumer = GiveCunsumer.id(1);
         System.out.println(giveCunsumer.give());
     }
 }
