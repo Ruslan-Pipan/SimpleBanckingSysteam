@@ -1,7 +1,6 @@
-package db.account.give.byId;
+package db.account.give;
 
 import db.ConnectionBank;
-import db.account.give.Give;
 import mod1.com.mybanck.domain.accounts.Account;
 import mod1.com.mybanck.domain.accounts.CheckingAccount;
 
@@ -13,13 +12,26 @@ import java.sql.Statement;
 
 public class GiveChecking extends Give {
 
-    public GiveChecking(int id){
-        this.id = id;
-        this.sql = SQLByID.CHHECKING.getSql() + id;
+    private GiveChecking(){}
+
+
+    public static GiveChecking id(int id){
+        GiveChecking giveChecking = new GiveChecking();
+        giveChecking.id = id;
+        giveChecking.sql = SQLByID.CHHECKING.getSql() + id;
+        return giveChecking;
     }
 
+    public static GiveChecking bankAcc(long bankAcc){
+        GiveChecking giveChecking = new GiveChecking();
+        giveChecking.bank_acc = bankAcc;
+        giveChecking.sql = SQLByBankAcc.CHEKING.getSql() + bankAcc;
+        return giveChecking;
+    }
+
+
     @Override
-    public CheckingAccount give() {
+    public Account give() {
         try(Connection connection = ConnectionBank.getConn();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)
