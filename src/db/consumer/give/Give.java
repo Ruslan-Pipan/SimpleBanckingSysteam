@@ -9,7 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-abstract class GiveCunsumerDefault implements GiveCunsumer{
+abstract public class Give{
+
+    protected int id;
+    protected String sql;
+
+
+    abstract Consumer give();
+
 
     protected Consumer giveBySql(String sql){
         try(Connection connection = ConnectionBank.getConn();
