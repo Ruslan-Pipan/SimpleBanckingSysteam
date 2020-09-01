@@ -1,4 +1,4 @@
-package db.account.give.byId;
+package db.account.give;
 
 public enum SQLByID {
     ACC("SELECT * FROM accounts WHERE id = "),
