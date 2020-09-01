@@ -4,7 +4,7 @@ import db.ConnectionBank;
 import db.account.give.Give;
 import mod1.com.mybanck.domain.accounts.Account;
 import mod1.com.mybanck.domain.accounts.CheckingAccount;
-import mod1.com.mybanck.domain.accounts.SavingAccount;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ public class GiveChecking extends Give {
     public CheckingAccount give() {
         try(Connection connection = ConnectionBank.getConn();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery(sql)
         ) {
             if (resultSet.next()){
                 Account account = giveDefaultAcc();

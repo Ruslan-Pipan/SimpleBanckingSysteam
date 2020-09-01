@@ -21,7 +21,7 @@ public class GiveSaving extends Give {
     public SavingAccount give() {
         try(Connection connection = ConnectionBank.getConn();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery(sql)
         ) {
             if (resultSet.next()){
                 Account account = giveDefaultAcc();
