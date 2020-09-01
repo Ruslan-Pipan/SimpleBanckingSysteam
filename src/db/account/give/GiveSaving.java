@@ -1,7 +1,6 @@
-package db.account.give.byId;
+package db.account.give;
 
 import db.ConnectionBank;
-import db.account.give.Give;
 import mod1.com.mybanck.domain.accounts.Account;
 import mod1.com.mybanck.domain.accounts.SavingAccount;
 
@@ -12,13 +11,25 @@ import java.sql.Statement;
 
 public class GiveSaving extends Give {
 
-    public GiveSaving(int id) {
-        this.id = id;
-        this.sql = SQLByID.SAVING.getSql() + id;
+    private GiveSaving(){}
+
+    public static GiveSaving id(int id){
+        GiveSaving giveSaving = new GiveSaving();
+        giveSaving.id = id;
+        giveSaving.sql = SQLByID.SAVING.getSql() + id;
+        return giveSaving;
     }
 
+    public static GiveSaving bankAcc(long bankAcc){
+        GiveSaving giveSaving = new GiveSaving();
+        giveSaving.bank_acc = bankAcc;
+        giveSaving.sql = SQLByBankAcc.SAVING.getSql() + bankAcc;
+        return giveSaving;
+    }
+
+
     @Override
-    public SavingAccount give() {
+    public Account give() {
         try(Connection connection = ConnectionBank.getConn();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)
