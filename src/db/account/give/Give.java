@@ -11,9 +11,11 @@ import java.sql.Statement;
 
 public abstract class Give {
     protected int id;
+    protected long bank_acc;
     protected String sql;
 
     public abstract Account give();
+
 
     protected Account giveDefaultAcc(){
         try(Connection connection = ConnectionBank.getConn();
