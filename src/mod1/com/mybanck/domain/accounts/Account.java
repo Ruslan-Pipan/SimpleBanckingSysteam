@@ -10,8 +10,12 @@ import java.io.Serializable;
 
 public class Account implements Serializable {
     private static final int version = 0;
+
+    protected int id;
+    protected int idCunsumer;
     protected long bankAccount;
     protected double balance;
+
     private static final long serialVersionUID = 1L;
 
 
@@ -26,11 +30,11 @@ public class Account implements Serializable {
         }else {
             this.balance = 0;
         }
-        this.bankAccount = GenerateBankAcc.generate();
+//        this.bankAccount = GenerateBankAcc.generate();
     }
     public Account(){
         this.balance = 0;
-        this.bankAccount = GenerateBankAcc.generate();
+//        this.bankAccount = GenerateBankAcc.generate();
     }
 
     /**
@@ -65,15 +69,42 @@ public class Account implements Serializable {
         GoodLog.getInstance().log("Return balancs");
         return balance;
     }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public long getBankAccount() {
         return bankAccount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIdCunsumer() {
+        return idCunsumer;
+    }
+
+    public void setIdCunsumer(int idCunsumer) {
+        this.idCunsumer = idCunsumer;
+    }
+
+    public void setBankAccount(long bankAccount) {
+        this.bankAccount = bankAccount;
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "balance=" + balance +
+                "id=" + id +
+                ", idCunsumer=" + idCunsumer +
+                ", bankAccount=" + bankAccount +
+                ", balance=" + balance +
                 '}';
     }
-
 }
