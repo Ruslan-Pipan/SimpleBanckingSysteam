@@ -1,12 +1,12 @@
 package loger;
 
 
-import mod1.entety.Bank;
-import mod1.entety.Consumer;
-import mod1.entety.accounts.CheckingAccount;
-import mod1.entety.accounts.SavingAccount;
-import mod1.bankException.BadVerification;
-import mod1.bankException.DontInitialisation;
+import entety.Bank;
+import entety.Consumer;
+import entety.accounts.CheckingAccount;
+import entety.accounts.SavingAccount;
+import bankException.BadVerification;
+import bankException.DontInitialisation;
 
 public class TestLoger {
     public static void main(String[] args) throws BadVerification, DontInitialisation {

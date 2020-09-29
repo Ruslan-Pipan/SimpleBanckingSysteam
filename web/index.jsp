@@ -1,3 +1,4 @@
+<%@page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -38,22 +39,30 @@
         <div class="cont_img_back_">
           <img src="img/bg.jpg" alt="" />
         </div>
+
         <div class="cont_form_login">
-          <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
-          <h2>Войти</h2>
-          <input type="text" placeholder="E-mail" />
-          <input type="password" placeholder="Пароль" />
-          <button class="btn_login" onclick="cambiar_login()">Войти</button>
+          <form action="/SimpleStsteamBanck_war/controler?action=login" name="sign_in" method="POST">
+            <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+            <h2>Войти</h2>
+            <input type="text" name="email" placeholder="E-mail" />
+            <input type="password" name="password" placeholder="Пароль" />
+            <button class="btn_login" onclick="cambiar_login()">Войти</button>
+          </form>
         </div>
+
         <div class="cont_form_sign_up">
+          <form action="/SimpleStsteamBanck_war/controler?action=login" name="sign_up" method="POST">
           <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
           <h2>Регистрация</h2>
-          <input type="text" placeholder="E-mail" />
-          <input type="text" placeholder="Логин" />
-          <input type="password" placeholder="Пароль" />
-          <input type="password" placeholder="Повторите пароль" />
+          <input type="text" name="email" placeholder="E-mail" />
+          <input type="text" name="firstName" placeholder="Имя">
+          <input type="text" name="secondName" placeholder="Фамилия">
+          <input type="password" name="firstPass" placeholder="Пароль" />
+          <input type="password" name="secondPass" placeholder="Повторите пароль" />
           <button class="btn_sign_up" onclick="cambiar_sign_up()">Зарегистрироваться</button>
+          </form>
         </div>
+
       </div>
     </div>
   </div>
