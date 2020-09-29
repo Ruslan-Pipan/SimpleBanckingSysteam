@@ -1,7 +1,5 @@
-package db.consumer.select;
+package dao.consumer.select;
 
-
-import db.Select;
 
 public class SelectByID extends SelectDefault{
     private  int id;
