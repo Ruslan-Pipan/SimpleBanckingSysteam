@@ -1,4 +1,4 @@
-package modul.command;
+package webModul.command;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -15,7 +15,10 @@ public class CommandFactory {
     }
 
     {
-        commands.put("login", new LoginComand());
+        commands.put("login", new LoginCommand());
+        commands.put("authorization", new AuthorizationCommand());
+        commands.put("sent_money", new SentMoneyCommand());
+        commands.put("draw_money", new DrawMoneyCommand());
     }
 
     public Command getCommand(HttpServletRequest request){

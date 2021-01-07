@@ -1,7 +1,6 @@
 package entety.accounts;
 
 
-import dao.account.GenerateBankAcc;
 import loger.BadLog;
 import loger.GoodLog;
 import bankException.OverdraftExeption;
@@ -9,10 +8,12 @@ import bankException.OverdraftExeption;
 import java.io.Serializable;
 
 public class CheckingAccount extends Account implements Serializable {
-    private static final int version = 1;
+
 
     private double overdraftAmount;
     private static final long serialVersionUID = 1L;
+
+    public CheckingAccount(){}
 
     public CheckingAccount(double balance, double overdraftAmount) {
         if (balance >= 0)
@@ -24,8 +25,6 @@ public class CheckingAccount extends Account implements Serializable {
             this.overdraftAmount = overdraftAmount;
         else
             this.overdraftAmount = 0;
-
-        this.bankAccount = GenerateBankAcc.generate();
         GoodLog.getInstance().log("Create CheckingAccount.");
     }
 
@@ -35,11 +34,12 @@ public class CheckingAccount extends Account implements Serializable {
     }
 
     public CheckingAccount(Account account){
-        this.balance = account.balance;
-        this.id = account.id;
-        this.idCunsumer = account.idCunsumer;
-        this.bankAccount = account.bankAccount;
+        this.id = account.getId();
+        this.balance = account.getBalance();
+        this.idConsumer = account.getIdConsumer();
+        this.bankAccount = account.getBankAccount();
     }
+
 
     @Override
     public boolean withdraw(double amt) throws OverdraftExeption {
@@ -56,14 +56,14 @@ public class CheckingAccount extends Account implements Serializable {
         this.overdraftAmount = overdraftAmount;
     }
 
+
     @Override
     public String toString() {
         return "CheckingAccount{" +
                 ", id=" + id +
-                ", idCunsumer=" + idCunsumer +
+                ", idCunsumer=" + idConsumer +
                 ", bankAccount=" + bankAccount +
                 ", balance=" + balance +
-                ", overdraftAmount=" + overdraftAmount +
-                '}';
+                ", overdraftAmount=" + overdraftAmount;
     }
 }

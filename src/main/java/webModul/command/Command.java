@@ -1,4 +1,4 @@
-package modul.command;
+package webModul.command;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -8,10 +8,10 @@ import bankException.OverdraftExeption;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-    private static final int version = 0;
+
 
     protected int id;
-    protected int idCunsumer;
+    protected int idConsumer;
     protected long bankAccount;
     protected double balance;
 
@@ -29,11 +29,9 @@ public class Account implements Serializable {
         }else {
             this.balance = 0;
         }
-//        this.bankAccount = GenerateBankAcc.generate();
     }
     public Account(){
         this.balance = 0;
-//        this.bankAccount = GenerateBankAcc.generate();
     }
 
     /**
@@ -55,13 +53,14 @@ public class Account implements Serializable {
      * @param amt a positive amount of money
      * */
     public boolean withdraw(double amt) throws OverdraftExeption {
-       if (amt <= balance){
-           balance -= amt;
-           GoodLog.getInstance().log("Monney withdraw");
-           return true;
-       }
-       BadLog.getInstance().log("Monney dont withdraw");
-       throw new OverdraftExeption(amt - balance, "Error! There are not enough funds on the balance sheet on account " + balance + " you you tried to remove " + amt);
+
+        if (amt <= balance) {
+            balance -= amt;
+            GoodLog.getInstance().log("Monney withdraw");
+            return true;
+        }
+        BadLog.getInstance().log("Monney dont withdraw");
+        return false;
     }
 
     public double getBalance() {
@@ -85,25 +84,25 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public int getIdCunsumer() {
-        return idCunsumer;
+    public int getIdConsumer() {
+        return idConsumer;
     }
 
-    public void setIdCunsumer(int idCunsumer) {
-        this.idCunsumer = idCunsumer;
+    public void setIdConsumer(int idConsumer) {
+        this.idConsumer = idConsumer;
     }
 
     public void setBankAccount(long bankAccount) {
         this.bankAccount = bankAccount;
     }
 
+
     @Override
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", idCunsumer=" + idCunsumer +
+                ", idCunsumer=" + idConsumer +
                 ", bankAccount=" + bankAccount +
-                ", balance=" + balance +
-                '}';
+                ", balance=" + balance;
     }
 }

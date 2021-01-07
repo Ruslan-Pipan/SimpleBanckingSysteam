@@ -1,7 +1,7 @@
-package modul.servlets;
+package webModul.servlets;
 
-import modul.command.Command;
-import modul.command.CommandFactory;
+import webModul.command.Command;
+import webModul.command.CommandFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

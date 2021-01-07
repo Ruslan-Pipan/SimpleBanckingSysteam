@@ -30,11 +30,13 @@
           </div>
         </div>
       </div>
+
       <div class="cont_back_info">
         <div class="cont_img_back_grey">
           <img src="img/bg.jpg" alt="" />
         </div>
       </div>
+
       <div class="cont_forms">
         <div class="cont_img_back_">
           <img src="img/bg.jpg" alt="" />
@@ -51,10 +53,11 @@
         </div>
 
         <div class="cont_form_sign_up">
-          <form action="/SimpleStsteamBanck_war/controler?action=login" name="sign_up" method="POST">
+          <form action="/SimpleStsteamBanck_war/controler?action=authorization" name="sign_up" method="POST">
           <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
           <h2>Регистрация</h2>
-          <input type="text" name="email" placeholder="E-mail" />
+          <input type="email" name="email" placeholder="E-mail" />
+          <input type="text" name="phoneNumber" placeholder="Телефон" />
           <input type="text" name="firstName" placeholder="Имя">
           <input type="text" name="secondName" placeholder="Фамилия">
           <input type="password" name="firstPass" placeholder="Пароль" />

@@ -1,4 +1,4 @@
-package dao.account.give;
+package newDao.repositories.enums;
 
 public enum SQLByID {
     ACC("SELECT * FROM accounts WHERE id = "),

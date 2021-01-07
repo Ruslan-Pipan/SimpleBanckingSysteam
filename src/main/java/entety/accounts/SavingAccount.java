@@ -1,15 +1,16 @@
 package entety.accounts;
 
-import dao.account.GenerateBankAcc;
 import loger.GoodLog;
 
 import java.io.Serializable;
 
 public class SavingAccount extends Account implements Serializable {
-    private static final int version = 2;
 
     private double interestRate;
     private static final long serialVersionUID = 1L;
+
+
+    public SavingAccount(){}
 
     public SavingAccount(double balance, double interestRate) {
         if (balance >= 0)
@@ -18,8 +19,6 @@ public class SavingAccount extends Account implements Serializable {
             this.balance = 0;
 
         this.interestRate = interestRate;
-
-        this.bankAccount = GenerateBankAcc.generate();
         GoodLog.getInstance().log("Create SavingAccount.");
     }
 
@@ -27,7 +26,7 @@ public class SavingAccount extends Account implements Serializable {
         this.balance = account.balance;
         this.bankAccount = account.bankAccount;
         this.id = account.id;
-        this.idCunsumer = account.idCunsumer;
+        this.idConsumer = account.idConsumer;
     }
 
     public void setInterestRate(double interestRate) {
@@ -42,10 +41,9 @@ public class SavingAccount extends Account implements Serializable {
     public String toString() {
         return "SavingAccount{" +
                 ", id=" + id +
-                ", idCunsumer=" + idCunsumer +
+                ", idCunsumer=" + idConsumer +
                 ", bankAccount=" + bankAccount +
                 ", balance=" + balance +
-                ", interestRate=" + interestRate +
-                '}';
+                ", interestRate=" + interestRate;
     }
 }

@@ -8,6 +8,7 @@ import bankException.DontInitialisation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +40,6 @@ public class Consumer implements Serializable {
         this.email = bild.email;
         this.password = bild.password;
         this.custumerNumber = custumerNumberBase+1;
-        addAccount(new Account());
         GoodLog.getInstance().log("Create Consumer.");
     }
 
@@ -102,12 +102,28 @@ public class Consumer implements Serializable {
         return "";
     }
 
+    public List<Account> getAccounts() {
+        return Collections.unmodifiableList(accounts);
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setPhonNumber(String phonNumber) {
+        this.phonNumber = phonNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -167,6 +183,8 @@ public class Consumer implements Serializable {
             this.id = id;
             return this;
         }
+
+
 
         public Consumer build(){
             GoodLog.getInstance().log("Return consumer build.");
