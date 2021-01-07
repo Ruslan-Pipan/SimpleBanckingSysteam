@@ -1,10 +1,10 @@
-package newDao.services.implementations;
+package dao.services.implementations;
 
 import bankException.DontInitialisation;
 import entety.Consumer;
 import entety.accounts.Account;
-import newDao.repositories.interfaces.AccountRepository;
-import newDao.services.interfaces.AccountService;
+import dao.repositories.interfaces.AccountRepository;
+import dao.services.interfaces.AccountService;
 
 import java.util.List;
 

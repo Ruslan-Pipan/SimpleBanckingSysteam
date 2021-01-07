@@ -1,4 +1,4 @@
-package newDao.repositories.enums;
+package dao.repositories.enums;
 
 public enum SQLByBankAcc {
     ACC("SELECT * FROM accounts WHERE bank_acc = "),

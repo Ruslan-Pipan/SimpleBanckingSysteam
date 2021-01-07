@@ -1,4 +1,4 @@
-package newDao.repositories.interfaces;
+package dao.repositories.interfaces;
 
 import entety.Consumer;
 import entety.accounts.Account;

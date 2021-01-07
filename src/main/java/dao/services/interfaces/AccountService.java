@@ -1,8 +1,8 @@
-package newDao.services.interfaces;
+package dao.services.interfaces;
 
 import bankException.DontInitialisation;
 import entety.accounts.Account;
-import newDao.repositories.interfaces.AccountRepository;
+import dao.repositories.interfaces.AccountRepository;
 
 public interface AccountService<T extends Account> extends AccountRepository<T>{
     boolean removeAccount(T account);

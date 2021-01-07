@@ -1,12 +1,12 @@
-package newDao.repositories.implementations;
+package dao.repositories.implementations;
 
 
 import entety.Consumer;
 import entety.accounts.Account;
-import newDao.ConnectionBank;
-import newDao.repositories.enums.SQLByBankAcc;
-import newDao.repositories.enums.SQLByID;
-import newDao.repositories.interfaces.AccountRepository;
+import dao.ConnectionBank;
+import dao.repositories.enums.SQLByBankAcc;
+import dao.repositories.enums.SQLByID;
+import dao.repositories.interfaces.AccountRepository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
