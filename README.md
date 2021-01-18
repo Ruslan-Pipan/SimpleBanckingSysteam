@@ -12,12 +12,15 @@ The second system has data about employees and their position, and salary, imple
 
 *************************
 The second task was to create a system Conroler through Command Patterns.
+Used GoF Command pattern, Command interfaces with single method execute(), CommandFactory with all commands, and separate command on each HTTP request.
 
 ***********************
-The trid task was to rewrite a system Conroler through Command Patterns and create a new  DispatcherServlet(like in Spring) with three annotations Controller, Get, Post to be implemented through Reflection.
+The trid task was to rewrite a system Conroler through Command Patterns and create a new DispatcherServlet(like in Spring) with three annotations Controller, Get, Post to be implemented through Reflection.
+
+Create DispatcherSerlet which has found all controls about marked @Controler annotation, and created a single object and put it to the cache. Classes marked @Conroler should have methods with HTTP requests and marked @Post or @Get.
+Annotation @Controler should have the main path, @Post and @Get should have a path on specific requests. At runtime should call the query method, which has an HTTP request.
 
 **********************
 The fourth task covered with Junit tests, and fix found mistakes.
-
 ***********************
 The fifth task consolidate knowledge of Java SE such as: Collections, Generics, SOLID principles, GoF patterns, OOP princeples.
