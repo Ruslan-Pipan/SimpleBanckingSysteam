@@ -1,15 +1,17 @@
 package entety;
 
+import entety.accounts.Account;
+import exceptions.BadVerification;
+import exceptions.DontInitialisation;
 import loger.BadLog;
 import loger.GoodLog;
-import entety.accounts.Account;
-import bankException.BadVerification;
-import bankException.DontInitialisation;
+import service.Verification;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 /**
  * Cunsumers Main class, have in itself class Builder.

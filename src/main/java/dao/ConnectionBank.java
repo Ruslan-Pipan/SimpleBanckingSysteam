@@ -9,10 +9,10 @@ public class ConnectionBank {
     private static final String PASSWORD = "Ruslan12619";
     private static final String USER_NAME = "root";
 
-    public static synchronized Connection getConn() throws ClassNotFoundException, SQLException {
+    public static synchronized Connection getConn() throws SQLException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return DriverManager.getConnection(URL,USER_NAME,PASSWORD);

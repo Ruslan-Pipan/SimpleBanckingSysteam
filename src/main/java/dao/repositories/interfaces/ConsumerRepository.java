@@ -1,6 +1,6 @@
 package dao.repositories.interfaces;
 
-import bankException.BadVerification;
+import exceptions.BadVerification;
 import entety.Consumer;
 
 import java.util.List;

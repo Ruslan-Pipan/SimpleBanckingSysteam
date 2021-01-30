@@ -1,7 +1,7 @@
 package dao.services.implementations;
 
-import bankException.BadVerification;
-import bankException.DontInitialisation;
+import exceptions.BadVerification;
+import exceptions.DontInitialisation;
 import entety.Consumer;
 import dao.ConnectionBank;
 import dao.repositories.interfaces.ConsumerRepository;
@@ -30,7 +30,7 @@ public class ConsumerServiceImp implements ConsumerService {
         ) {
             statement.execute(SQL);
             return true;
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException  throwables) {
             throwables.printStackTrace();
         }
         return false;
@@ -50,7 +50,7 @@ public class ConsumerServiceImp implements ConsumerService {
             preparedStatement.setString(6,consumer.getAdress());
             preparedStatement.executeUpdate();
             return true;
-        } catch (SQLException | ClassNotFoundException | DontInitialisation throwables) {
+        } catch (SQLException | DontInitialisation throwables) {
             throwables.printStackTrace();
         }
         return false;
@@ -101,7 +101,7 @@ public class ConsumerServiceImp implements ConsumerService {
 
     @Override
     public Consumer findConsumerByBankAcc(long banckAcc) {
-        return findConsumerByBankAcc(banckAcc);
+        return repository.findConsumerByBankAcc(banckAcc);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class ConsumerServiceImp implements ConsumerService {
             preparedStatement.setInt(2,id);
             preparedStatement.executeUpdate();
             return true;
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return false;

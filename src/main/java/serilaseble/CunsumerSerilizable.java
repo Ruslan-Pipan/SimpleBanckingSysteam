@@ -1,6 +1,5 @@
 package serilaseble;
 
-import com.sun.istack.internal.NotNull;
 import loger.BadLog;
 import loger.GoodLog;
 import entety.Consumer;
@@ -11,7 +10,7 @@ public class CunsumerSerilizable {
 
     private CunsumerSerilizable(){}
 
-    public static boolean serializationConsumer(@NotNull String path, Consumer cunstomer){
+    public static boolean serializationConsumer( String path, Consumer cunstomer){
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path))){
             outputStream.writeObject(cunstomer);
             outputStream.flush();
@@ -23,7 +22,7 @@ public class CunsumerSerilizable {
         return false;
     }
 
-    public static boolean serializationConsumer(@NotNull File path, Consumer cunstomer){
+    public static boolean serializationConsumer(File path, Consumer cunstomer){
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path))){
             outputStream.writeObject(cunstomer);
             outputStream.flush();

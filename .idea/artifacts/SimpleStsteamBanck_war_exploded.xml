@@ -14,10 +14,14 @@
           <element id="module-output" name="SimpleStsteamBanck" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.reflections:reflections:0.9.12" />
+          <element id="library" level="project" name="Maven: org.javassist:javassist:3.26.0-GA" />
+          <element id="library" level="project" name="Maven: javax.annotation:jsr250-api:1.0" />
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.2" />
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
-          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.36" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.11" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:2.6.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">

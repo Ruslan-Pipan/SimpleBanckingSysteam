@@ -1,6 +1,6 @@
 package dao.services.interfaces;
 
-import bankException.DontInitialisation;
+import exceptions.DontInitialisation;
 import entety.accounts.Account;
 import dao.repositories.interfaces.AccountRepository;
 

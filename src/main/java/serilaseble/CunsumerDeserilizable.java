@@ -1,6 +1,6 @@
 package serilaseble;
 
-import com.sun.istack.internal.NotNull;
+
 import loger.BadLog;
 import loger.GoodLog;
 import entety.Consumer;
@@ -10,7 +10,7 @@ import java.io.*;
 public class CunsumerDeserilizable {
     private CunsumerDeserilizable(){}
 
-    public static Consumer deserializationCunstomer(@NotNull String path){
+    public static Consumer deserializationCunstomer(String path){
         File file = new File(path);
         try (ObjectInputStream outputStream = new ObjectInputStream(new FileInputStream(path))){
             GoodLog.getInstance().log("Deserialization god.");
@@ -22,7 +22,7 @@ public class CunsumerDeserilizable {
         return null;
     }
 
-    public static Consumer deserializationCunstomer(@NotNull File path){
+    public static Consumer deserializationCunstomer( File path){
         try (ObjectInputStream outputStream = new ObjectInputStream(new FileInputStream(path))){
             GoodLog.getInstance().log("Deserialization god.");
             return(Consumer) outputStream.readObject();

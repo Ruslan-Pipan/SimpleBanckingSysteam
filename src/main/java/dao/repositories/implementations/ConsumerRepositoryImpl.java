@@ -1,9 +1,12 @@
 package dao.repositories.implementations;
 
 
-import bankException.BadVerification;
+import dao.repositories.implementations.accounts.AccountRepositoryImpl;
+import dao.repositories.implementations.accounts.CheckingAccountRepositoryImpl;
+import dao.repositories.implementations.accounts.SavingAccountRepositoryImpl;
+import exceptions.BadVerification;
 import entety.Consumer;
-import entety.Verification;
+import service.Verification;
 import entety.accounts.Account;
 import entety.accounts.CheckingAccount;
 import entety.accounts.SavingAccount;
@@ -32,7 +35,7 @@ public class ConsumerRepositoryImpl implements ConsumerRepository {
                 consumers.add(createConsumer(resultSet));
            }
            return consumers;
-        } catch (SQLException | ClassNotFoundException | BadVerification throwables) {
+        } catch (SQLException  | BadVerification throwables) {
             throwables.printStackTrace();
         }
         return Collections.emptyList();
@@ -50,7 +53,7 @@ public class ConsumerRepositoryImpl implements ConsumerRepository {
                 consumers.add(createConsumer(resultSet));
             }
             return consumers;
-        } catch (SQLException | ClassNotFoundException | BadVerification throwables) {
+        } catch (SQLException  | BadVerification throwables) {
             throwables.printStackTrace();
         }
 
@@ -81,7 +84,7 @@ public class ConsumerRepositoryImpl implements ConsumerRepository {
                 return findConsumerById(id);
             }
             throw new BadVerification("");
-        } catch (SQLException | ClassNotFoundException | BadVerification throwables) {
+        } catch (SQLException  | BadVerification throwables) {
             throwables.printStackTrace();
         }
         return null;
@@ -105,7 +108,7 @@ public class ConsumerRepositoryImpl implements ConsumerRepository {
         ){
             resultSet.next();
             return createConsumer(resultSet);
-        } catch (SQLException | ClassNotFoundException | BadVerification throwables) {
+        } catch (SQLException  | BadVerification throwables) {
             throwables.printStackTrace();
         }
         return new Consumer.CunsumerBild("0","0").build();
