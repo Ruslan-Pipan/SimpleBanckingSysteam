@@ -1,70 +1,80 @@
 package dao.services.implementations.accounts;
 
+import dao.ConnectionBank;
+import dao.services.interfaces.AccountRepository;
 import exceptions.DontInitialisation;
 import entety.Consumer;
 import entety.accounts.Account;
-import dao.repositories.interfaces.AccountRepository;
 import dao.services.interfaces.AccountService;
 
+import java.sql.*;
 import java.util.List;
 
-public class AccountServiceImpl implements AccountService<Account>{
-
-    private final String SQL_FOR_UPDATE = "UPDATE accounts SET balance = ? WHERE id = ?";
-
-    private final HandlerService<Account> service = new HandlerService<>();
-    private final AccountRepository<Account> repository;
-
-    public AccountServiceImpl(AccountRepository<Account> repository) {
-        this.repository = repository;
-    }
-
+public class AccountServiceImpl implements AccountService<Account>, AccountRepository<Account> {
+    private final static HandlerService handler = new HandlerService();
+    public AccountServiceImpl() { }
     @Override
     public boolean removeAccount(Account account) {
         String SQL_FOR_DELETE = "DELETE FROM accounts WHERE id = ?";
-        return service.removeAccount(account, SQL_FOR_DELETE);
+        boolean flag = false;
+        try(Connection connection = ConnectionBank.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FOR_DELETE);
+        ){
+            preparedStatement.setInt(1,account.getId());
+            preparedStatement.executeUpdate();
+            flag = true;
+            account = new Account();
+        } catch (SQLException  throwables) {
+            throwables.printStackTrace();
+        }
+        return flag;
     }
 
     @Override
     public boolean addAccount(Account account) {
-        String SQL_FOR_INSERT = "INSERT INTO accounts(idCunsumer, balance, bank_acc) VALUES(?,?,?)";
-        try {
-            return service.addAccount(account, SQL_FOR_INSERT);
-        } catch (DontInitialisation dontInitialisation) {
-            dontInitialisation.printStackTrace();
+        String SQL_FOR_INSERT = "INSERT INTO accounts(id_consumer, balance, bank_acc) VALUES(?,?,?)";
+        try(Connection connection = ConnectionBank.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_FOR_INSERT);
+        ) {
+            preparedStatement.setInt(1, account.getIdConsumer());
+            preparedStatement.setDouble(2, account.getBalance());
+            preparedStatement.setLong(3, handler.getLastBankAcc());
+            return true;
+        } catch (SQLException | DontInitialisation throwable) {
+            throwable.printStackTrace();
         }
         return false;
     }
 
     @Override
     public boolean transaction(Account accountFrom, Account accountTo, double awt) {
-      return service.transaction(accountFrom,accountTo,awt,SQL_FOR_UPDATE);
+      return handler.transaction(accountFrom,accountTo,awt);
     }
 
     @Override
     public boolean updateBalance(Account account) {
-        return service.updateBalance(account,SQL_FOR_UPDATE);
+        return handler.updateBalance(account,HandlerService.SQL_FOR_UPDATE);
     }
 
     @Override
     public Account findAccountByBankAccount(long bankAcc) {
-        return repository.findAccountByBankAccount(bankAcc);
+        return handler.giveAcc(HandlerService.SQL_WHERE_BANK_ACC + bankAcc);
     }
 
     @Override
-    public List<Account> findAccountsByConsumerId(int consumerId) {
-        return repository.findAccountsByConsumerId(consumerId);
+    public List<Account> findAccountsByConsumer(int consumerId) {
+
+        return handler.getListAccByIdConsumer(consumerId);
     }
 
     @Override
     public Account findAccountById(int id) {
-        return repository.findAccountById(id);
+        return handler.giveAcc(HandlerService.SQL_WHERE_ID + id);
     }
 
     @Override
-    public List<Account> findAccountsConsumer(Consumer consumer) {
-        return repository.findAccountsConsumer(consumer);
+    public List<Account> findAccountsByConsumer(Consumer consumer) {
+        return handler.getListAccByIdConsumer(consumer.getId());
     }
-
 
 }

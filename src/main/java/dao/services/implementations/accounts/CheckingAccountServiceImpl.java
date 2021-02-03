@@ -1,68 +1,148 @@
 package dao.services.implementations.accounts;
 
+import dao.ConnectionBank;
+import dao.services.interfaces.AccountRepository;
+import entety.accounts.Account;
 import exceptions.DontInitialisation;
 import entety.Consumer;
 import entety.accounts.CheckingAccount;
-import dao.repositories.interfaces.AccountRepository;
 import dao.services.interfaces.AccountService;
 
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CheckingAccountServiceImpl implements AccountService<CheckingAccount> {
+public class CheckingAccountServiceImpl implements AccountService<CheckingAccount>, AccountRepository<CheckingAccount> {
 
-    private final String SQL_FOR_UPDATE = "UPDATE checking_accounts SET balance = ? WHERE id = ?";
+    private final String SQL_FOR_UPDATE = "UPDATE accounts SET balance = ? WHERE id = ?";
 
-    private final AccountRepository<CheckingAccount> repository;
-    private final HandlerService<CheckingAccount> service = new HandlerService<>();
+    private final HandlerService handler = new HandlerService();
 
-    public CheckingAccountServiceImpl(AccountRepository<CheckingAccount> repository) {
-        this.repository = repository;
+    public CheckingAccountServiceImpl() {
     }
 
     @Override
     public boolean removeAccount(CheckingAccount account) {
-        String SQL_FOR_DELETE = "DELETE FROM checking_accounts WHERE id = ?";
-        return service.removeAccount(account, SQL_FOR_DELETE);
+        String SQL_FOR_DELETE = "DELETE FROM checkin_acc WHERE id_acc = ?";
+        return handler.removeAccount(account,SQL_FOR_DELETE);
     }
 
     @Override
     public boolean addAccount(CheckingAccount account)  {
-        String SQL_FOR_INSERT = "INSERT INTO checking_accounts(idCunsumer, balance, bank_acc) VALUES(?,?,?)";
+        String SQL_FOR_INSERT_OVERDRAFT = "INSERT INTO checkin_acc(id_acc,overdraft,id_consumer) VALUES(LAST_INSERT_ID(),?,?)";
+        String SQL_FOR_INSERT = "INSERT INTO accounts(id_consumer, balance, bank_acc) VALUES(?,?,?)";
+        Connection connection = null;
         try {
-            return service.addAccount(account, SQL_FOR_INSERT);
+            connection = ConnectionBank.getConn();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try(PreparedStatement preparedStatementAcc = connection.prepareStatement(SQL_FOR_INSERT);
+            PreparedStatement preparedStatementCheck = connection.prepareStatement(SQL_FOR_INSERT_OVERDRAFT);
+        ) {
+            connection.setAutoCommit(false);
+            preparedStatementAcc.setInt(1, account.getIdConsumer());
+            preparedStatementAcc.setDouble(2, account.getBalance());
+            preparedStatementAcc.setLong(3, handler.getLastBankAcc());
+            preparedStatementAcc.executeUpdate();
+
+            preparedStatementCheck.setDouble(1, account.getOverdraftAmount());
+            preparedStatementCheck.setInt(2,account.getIdConsumer());
+            preparedStatementCheck.executeUpdate();
+            connection.commit();
+
+            connection.setAutoCommit(false);
+
+            return true;
+        } catch (SQLException dontInitialisation) {
+            dontInitialisation.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         } catch (DontInitialisation dontInitialisation) {
             dontInitialisation.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
         }
         return false;
     }
 
     @Override
     public boolean transaction(CheckingAccount accountFrom, CheckingAccount  accountTo, double awt) {
-        return service.transaction(accountFrom,accountTo,awt,SQL_FOR_UPDATE);
+        return handler.transaction(accountFrom,accountTo,awt);
     }
 
     @Override
     public boolean updateBalance(CheckingAccount account) {
-        return service.updateBalance(account,SQL_FOR_UPDATE);
+        return handler.updateBalance(account,SQL_FOR_UPDATE);
     }
 
     @Override
     public CheckingAccount findAccountByBankAccount(long bankAcc) {
-        return (CheckingAccount) repository.findAccountByBankAccount(bankAcc);
+        return getAccBySQL(HandlerService.SQL_WHERE_BANK_ACC + bankAcc);
     }
 
-    @Override
-    public List<CheckingAccount> findAccountsByConsumerId(int consumerId) {
-        return  repository.findAccountsByConsumerId(consumerId);
-    }
 
     @Override
     public CheckingAccount findAccountById(int id) {
-        return (CheckingAccount) repository.findAccountById(id);
+        return getAccBySQL(HandlerService.SQL_WHERE_ID + id);
+    }
+
+
+    @Override
+    public List<CheckingAccount> findAccountsByConsumer(int consumerId) {
+        String SQL = "SELECT * FROM checkin_acc WHERE id_consumer = " + consumerId;
+        List<Account> accounts = handler.getListAccByIdConsumer(consumerId);
+        List<CheckingAccount> checkingAccounts = new ArrayList<>();
+        try(Connection connection = ConnectionBank.getConn();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL);
+        ){
+            while (resultSet.next()){
+                int id_acc = resultSet.getInt("id_acc");
+                for (Account a: accounts) {
+                    if (a.getId() == id_acc){
+                       CheckingAccount checkingAccount = new CheckingAccount(a);
+                       checkingAccount.setOverdraftAmount(resultSet.getDouble("overdraft"));
+                       checkingAccounts.add(checkingAccount);
+                    }
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return checkingAccounts;
     }
 
     @Override
-    public List<CheckingAccount> findAccountsConsumer(Consumer consumer) {
-        return repository.findAccountsConsumer(consumer);
+    public List<CheckingAccount> findAccountsByConsumer(Consumer consumer) {
+        return findAccountsByConsumer(consumer.getId());
+    }
+
+    private CheckingAccount getAccBySQL(String SQL_WHERE){
+        Account account = handler.giveAcc(SQL_WHERE);
+        if (account!=null){
+            String SQL = "SELECT * FROM checkin_acc WHERE id_acc = " + account.getId();
+            try(Connection connection = ConnectionBank.getConn();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(SQL);
+            ){
+                resultSet.next();
+                CheckingAccount checkingAccount = new CheckingAccount(account);
+                checkingAccount.setOverdraftAmount(resultSet.getDouble("overdraft"));
+                return checkingAccount;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
     }
 }

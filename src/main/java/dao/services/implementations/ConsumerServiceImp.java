@@ -1,17 +1,11 @@
 package dao.services.implementations;
 
-import dao.services.implementations.accounts.AccountServiceImpl;
-import dao.services.implementations.accounts.CheckingAccountServiceImpl;
-import dao.services.implementations.accounts.SavingAccountServiceImpl;
-import dao.services.interfaces.AccountRepository;
 import entety.accounts.Account;
-import entety.accounts.CheckingAccount;
-import entety.accounts.SavingAccount;
 import exceptions.BadVerification;
 import entety.Consumer;
 import dao.ConnectionBank;
 import dao.services.interfaces.ConsumerService;
-import service.ServiceConstants;
+import dao.ServiceConstants;
 import service.Verification;
 
 import java.sql.*;
