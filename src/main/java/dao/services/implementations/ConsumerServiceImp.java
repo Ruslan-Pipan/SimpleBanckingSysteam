@@ -1,34 +1,38 @@
 package dao.services.implementations;
 
+import dao.services.implementations.accounts.AccountServiceImpl;
+import dao.services.implementations.accounts.CheckingAccountServiceImpl;
+import dao.services.implementations.accounts.SavingAccountServiceImpl;
+import dao.services.interfaces.AccountRepository;
+import entety.accounts.Account;
+import entety.accounts.CheckingAccount;
+import entety.accounts.SavingAccount;
 import exceptions.BadVerification;
-import exceptions.DontInitialisation;
 import entety.Consumer;
 import dao.ConnectionBank;
-import dao.repositories.interfaces.ConsumerRepository;
 import dao.services.interfaces.ConsumerService;
+import service.ServiceConstants;
+import service.Verification;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-import java.util.Set;
+import java.sql.*;
+import java.util.*;
 
 public class ConsumerServiceImp implements ConsumerService {
 
-    private ConsumerRepository repository;
+    private static final String SQL_SELECT_ALL_CONSUMERS = "SELECT * FROM consumer";
 
-    public ConsumerServiceImp(ConsumerRepository consumerRepository) {
-        this.repository = consumerRepository;
+    public ConsumerServiceImp() {
+
     }
 
     @Override
     public boolean removeConsumer(Consumer consumer) {
-        final String SQL = "DELETE FROM consumer WHERE id = " + consumer.getId();
+        final String SQL = "DELETE FROM consumer WHERE id = ?";
         try(Connection connection = ConnectionBank.getConn();
-            Statement statement = connection.createStatement();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL)
         ) {
-            statement.execute(SQL);
+            preparedStatement.setInt(1,consumer.getId());
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException  throwables) {
             throwables.printStackTrace();
@@ -47,11 +51,11 @@ public class ConsumerServiceImp implements ConsumerService {
             preparedStatement.setString(3,consumer.getEmail());
             preparedStatement.setString(4,consumer.getPhoneNumber());
             preparedStatement.setString(5,consumer.getPassword());
-            preparedStatement.setString(6,consumer.getAdress());
+            preparedStatement.setString(6,consumer.getAddress());
             preparedStatement.executeUpdate();
             return true;
-        } catch (SQLException | DontInitialisation throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException  throwable) {
+            throwable.printStackTrace();
         }
         return false;
     }
@@ -59,23 +63,13 @@ public class ConsumerServiceImp implements ConsumerService {
     @Override
     public boolean editConsumerEmail(Consumer consumer) {
         final String SQL = "UPDATE consumer SET email = ? WHERE id = ?";
-        try {
-            return editBySQL(SQL, consumer.getId(), consumer.getEmail());
-        } catch (DontInitialisation dontInitialisation) {
-            dontInitialisation.printStackTrace();
-        }
-        return false;
+        return editBySQL(SQL, consumer.getId(), consumer.getEmail());
     }
 
     @Override
     public boolean editConsumerPhone(Consumer consumer) {
         final String SQL = "UPDATE consumer SET phone_number = ? WHERE id = ?";
-        try {
-            return editBySQL(SQL,consumer.getId(),consumer.getPhoneNumber());
-        } catch (DontInitialisation dontInitialisation) {
-            dontInitialisation.printStackTrace();
-        }
-        return false;
+        return editBySQL(SQL,consumer.getId(),consumer.getPhoneNumber());
     }
 
     @Override
@@ -86,27 +80,73 @@ public class ConsumerServiceImp implements ConsumerService {
 
     @Override
     public List<Consumer> getConsumersList() {
-        return repository.getConsumersList();
+        List<Consumer> consumers = new ArrayList<>();
+        try (Connection connection = ConnectionBank.getConn();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_CONSUMERS);
+        ){
+            while (resultSet.next()){
+                consumers.add(createConsumer(resultSet));
+            }
+            return consumers;
+        } catch (SQLException  | BadVerification throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
     }
 
     @Override
     public Set<Consumer> getConsumersSet() {
-        return repository.getConsumersSet();
+        Set<Consumer> consumers = new HashSet<>();
+
+        try (Connection connection = ConnectionBank.getConn();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_CONSUMERS);
+        ){
+            while (resultSet.next()){
+                consumers.add(createConsumer(resultSet));
+            }
+            return consumers;
+        } catch (SQLException  | BadVerification throwables) {
+            throwables.printStackTrace();
+        }
+
+        return Collections.emptySet();
     }
 
     @Override
     public Consumer findConsumerById(int id) {
-        return repository.findConsumerById(id);
+        final String SQL = "SELECT * FROM consumer WHERE id =" + id;
+        return giveConsumerBySQL(SQL);
     }
 
     @Override
     public Consumer findConsumerByBankAcc(long banckAcc) {
-        return repository.findConsumerByBankAcc(banckAcc);
+        final String SQL = "SELECT * FROM accounts WHERE bank_acc = " + banckAcc;
+        try (Connection connection = ConnectionBank.getConn();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL);
+        ){
+            int id;
+            if (resultSet.next()){
+                id = resultSet.getInt("id");
+                return findConsumerById(id);
+            }
+            throw new BadVerification("");
+        } catch (SQLException  | BadVerification throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public Consumer findConsumerByEmail(String email) throws BadVerification {
-        return repository.findConsumerByEmail(email);
+        boolean flag = Verification.verifyEmail(email);
+        if (flag){
+            final String SQL = "SELECT * FROM consumer WHERE email = '" + email + "';";
+            return giveConsumerBySQL(SQL);
+        }
+        throw new BadVerification("Bad email");
     }
 
     private boolean editBySQL(String sql, int id, String updateValue){
@@ -121,5 +161,43 @@ public class ConsumerServiceImp implements ConsumerService {
             throwables.printStackTrace();
         }
         return false;
+    }
+    private Consumer giveConsumerBySQL(String sql)  {
+        try (Connection connection = ConnectionBank.getConn();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)
+        ){
+            resultSet.next();
+            return createConsumer(resultSet);
+        } catch (SQLException  | BadVerification throwables) {
+            throwables.printStackTrace();
+        }
+        return new Consumer.ConsumerBuild("0","0").build();
+    }
+
+
+    private Consumer createConsumer(ResultSet resultSet) throws SQLException, BadVerification {
+        int id = resultSet.getInt("id");
+        String first_name = resultSet.getString("first_name");
+        String last_name = resultSet.getString("last_name");
+        String email = resultSet.getString("email");
+        String phone_number = resultSet.getString("phone_number");
+        String password = resultSet.getString("password");
+        String adress = resultSet.getString("adress");
+
+        Consumer consumer = new Consumer.ConsumerBuild(first_name,last_name).setId(id).setEmail(email).setNumber(phone_number).setPass(password).setAddress(adress).build();
+
+        List<Account> list = getAllAccounts(id);
+
+        for (Account a:list) {
+            consumer.addAccount(a);
+        }
+
+        return consumer;
+    }
+
+
+    private List<Account> getAllAccounts(int consumerId){
+        return ServiceConstants.ACCOUNT_SERVICE.findAccountsByConsumer(consumerId);
     }
 }

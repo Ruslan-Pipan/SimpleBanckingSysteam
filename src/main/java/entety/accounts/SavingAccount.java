@@ -5,7 +5,7 @@ import loger.GoodLog;
 import java.io.Serializable;
 
 public class SavingAccount extends Account implements Serializable {
-
+    private final static int type = 2;
     private double interestRate;
     private static final long serialVersionUID = 1L;
 
@@ -37,13 +37,12 @@ public class SavingAccount extends Account implements Serializable {
         this.balance = this.balance + this.balance * interestRate/100;
     }
 
-    @Override
-    public String toString() {
-        return "SavingAccount{" +
-                ", id=" + id +
-                ", idCunsumer=" + idConsumer +
-                ", bankAccount=" + bankAccount +
-                ", balance=" + balance +
-                ", interestRate=" + interestRate;
+    public double getInterestRate() {
+        return interestRate;
     }
+
+    public int getType() {
+        return type;
+    }
+
 }

@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ruspi
-  Date: 29.09.2020
-  Time: 14:34
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <html>
@@ -15,7 +9,19 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="cotn_principal">
+    <div class="cotn_principal" style="height: 1600px;">
+
+        <c:forEach items="${sessionScope.transactions}" var="tr">
+            <p style="color: white; padding-top: 5px;">З картки: ${tr.accountFrom.bankAccount} переслано ${tr.remittance} на ${tr.accountTo.bankAccount}</p>
+        </c:forEach>
+
+        <form action="/getCheckingAcc">
+            <button class="btn_login">Відкрити Checkin Acc</button>
+        </form>
+        <form action="/getSavingAcc">
+            <button class="btn_login">Відкрити Saving Acc</button>
+        </form>
+
         <h1 style="color: white; padding-top: 20px;">${sessionScope.consumer.firstName} ${sessionScope.consumer.lastName}</h1>
         <c:forEach items="${sessionScope.consumer.accounts}" var="element">
         <div class="cont_centrar">
@@ -38,6 +44,10 @@
                                 </form>
                             </div>
                         </div>
+                    <form action="/getTransaction">
+                        <input type="hidden" name="idAcc" value="${element.id}">
+                        <button class="btn_login">Відкрити Transactions</button>
+                    </form>
                 </div>
                     <div class="cont_back_info" style="height: 220px">
                         <div class="cont_img_back_grey">
@@ -48,6 +58,5 @@
         </div>
         </c:forEach>
     </div>
-
 </body>
 </html>

@@ -2,7 +2,6 @@ package entety;
 
 import entety.accounts.Account;
 import exceptions.BadVerification;
-import exceptions.DontInitialisation;
 import loger.BadLog;
 import loger.GoodLog;
 import service.Verification;
@@ -11,44 +10,41 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
  * Cunsumers Main class, have in itself class Builder.
  * Builder - help to create.
  * */
-public class Consumer implements Serializable {
+public class Consumer implements Serializable{
     private static final long serialVersionUID = 1L;
-    private List<Account> accounts = new ArrayList<>();
-
+    private final List<Account> accounts = new ArrayList<>();
 
     private int id;
     private String firstName;
     private String lastName;
-    private String phonNumber;
-    private String adress;
+    private String phoneNumber;
+    private String address;
     private String email;
     private String password;
 
-    private int custumerNumber;
-    private static int custumerNumberBase = 100;
 
-    private Consumer(CunsumerBild bild) {
+    private Consumer(ConsumerBuild bild) {
         this.id = bild.id;
         this.firstName = bild.firstName;
         this.lastName = bild.lastName;
-        this.phonNumber = bild.phonNumber;
-        this.adress = bild.adress;
+        this.phoneNumber = bild.phoneNumber;
+        this.address = bild.address;
         this.email = bild.email;
         this.password = bild.password;
-        this.custumerNumber = custumerNumberBase+1;
         GoodLog.getInstance().log("Create Consumer.");
     }
 
-    public Account getAccount(int accNo){
-        if (accNo < accounts.size()){
-            GoodLog.getInstance().log("Get account Consumers.");
-            return accounts.get(accNo);
+    public Account getAccount(long accNo){
+        for (Account a: accounts){
+            if (a.getBankAccount() == accNo)
+                return a;
         }
         return null;
     }
@@ -68,25 +64,25 @@ public class Consumer implements Serializable {
         return lastName;
     }
 
-    public String getPhoneNumber() throws DontInitialisation {
-        if (phonNumber!= null){
+    public String getPhoneNumber() {
+        if (phoneNumber != null){
             GoodLog.getInstance().log("Get Phone Number.");
-            return phonNumber;
+            return phoneNumber;
         }
         BadLog.getInstance().log("Phone Number dont initialisation.");
         return "";
     }
 
-    public String getAdress() throws DontInitialisation {
-        if (adress!= null){
+    public String getAddress(){
+        if (address != null){
             GoodLog.getInstance().log("Get adress.");
-            return adress;
+            return address;
         }
         BadLog.getInstance().log("Adress dont initialisation.");
         return "";
     }
 
-    public String getEmail() throws DontInitialisation {
+    public String getEmail(){
         if (email!= null){
             GoodLog.getInstance().log("Get email.");
             return email;
@@ -116,8 +112,8 @@ public class Consumer implements Serializable {
         this.id = id;
     }
 
-    public void setPhonNumber(String phonNumber) {
-        this.phonNumber = phonNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setEmail(String email) {
@@ -128,27 +124,54 @@ public class Consumer implements Serializable {
         this.password = password;
     }
 
+
+    @Override
+    public String toString() {
+        return  "ID: " + id + "</br>" +
+                "Consumer: " + firstName + " " + lastName + "</br>" +
+                "email: " + email + "</br>" +
+                "phone: " + phoneNumber + "</br>" +
+                "address: " + address + "</br>" +
+                "Accounts" + accounts + "</br></br>" +
+                "<hr></hr>";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Consumer consumer = (Consumer) o;
+        return getId() == consumer.getId() &&
+                getEmail().equals(consumer.getEmail()) &&
+                getPassword().equals(consumer.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getEmail(), getPassword());
+    }
+
     /**
      * Class  bilder for cunsumer.
      * */
-    public static class CunsumerBild {
+    public static class ConsumerBuild {
         private int id;
-        private String phonNumber;
-        private String adress;
+        private String phoneNumber;
+        private String address;
         private String email;
         private String firstName;
         private String lastName;
         private String password;
 
-        public CunsumerBild(String firstName, String lastName) {
+        public ConsumerBuild(String firstName, String lastName) {
             this.firstName = firstName;
             this.lastName = lastName;
 
         }
 
-        public CunsumerBild setNumber(String phonNumber) throws BadVerification {
+        public ConsumerBuild setNumber(String phonNumber) throws BadVerification {
             if (Verification.verifyPhoneNumber(phonNumber)){
-                this.phonNumber = phonNumber;
+                this.phoneNumber = phonNumber;
                 GoodLog.getInstance().log(this.firstName + " " + this.lastName + "Add phone number.");
                 return this;
             }
@@ -156,13 +179,13 @@ public class Consumer implements Serializable {
             throw new BadVerification("Number dont set, bad number.");
         }
 
-        public CunsumerBild setAdress(String adress) {
-            this.adress = adress;
+        public ConsumerBuild setAddress(String address) {
+            this.address = address;
             GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add adress.");
             return this;
         }
 
-        public CunsumerBild setEmail(String email) throws BadVerification {
+        public ConsumerBuild setEmail(String email) throws BadVerification {
             if (Verification.verifyEmail(email)){
                 this.email = email;
                 GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add email.");
@@ -172,7 +195,7 @@ public class Consumer implements Serializable {
             throw new BadVerification("Email dont set, bad email.");
         }
 
-        public CunsumerBild setPass(String password) throws BadVerification {
+        public ConsumerBuild setPass(String password) throws BadVerification {
             if (Verification.verifyPassword(password)){
                 this.password = password;
                 GoodLog.getInstance().log(this.firstName + " " + this.lastName + " add password.");
@@ -181,32 +204,14 @@ public class Consumer implements Serializable {
             BadLog.getInstance().log("Password dont set, bad password.");
             throw new BadVerification("Password dont set, bad password.");
         }
-        public CunsumerBild setId(int id){
+        public ConsumerBuild setId(int id){
             this.id = id;
             return this;
         }
-
-
 
         public Consumer build(){
             GoodLog.getInstance().log("Return consumer build.");
             return new Consumer(this);
         }
-
-    }
-
-    @Override
-    public String toString() {
-        return "Consumer{" +
-                "accounts=" + accounts +
-                ", id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phonNumber='" + phonNumber + '\'' +
-                ", adress='" + adress + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", custumerNumber=" + custumerNumber +
-                '}';
     }
 }

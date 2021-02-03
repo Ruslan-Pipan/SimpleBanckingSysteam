@@ -2,7 +2,6 @@ package dao.services.interfaces;
 
 import exceptions.DontInitialisation;
 import entety.accounts.Account;
-import dao.repositories.interfaces.AccountRepository;
 
 public interface AccountService<T extends Account> extends AccountRepository<T>{
     boolean removeAccount(T account);

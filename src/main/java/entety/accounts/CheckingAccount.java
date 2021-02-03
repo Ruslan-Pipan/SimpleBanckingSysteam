@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 public class CheckingAccount extends Account implements Serializable {
 
-
+    private final static int type = 1;
     private double overdraftAmount;
     private static final long serialVersionUID = 1L;
 
@@ -56,14 +56,12 @@ public class CheckingAccount extends Account implements Serializable {
         this.overdraftAmount = overdraftAmount;
     }
 
-
-    @Override
-    public String toString() {
-        return "CheckingAccount{" +
-                ", id=" + id +
-                ", idCunsumer=" + idConsumer +
-                ", bankAccount=" + bankAccount +
-                ", balance=" + balance +
-                ", overdraftAmount=" + overdraftAmount;
+    public double getOverdraftAmount() {
+        return overdraftAmount;
     }
+
+    public int getType() {
+        return type;
+    }
+
 }

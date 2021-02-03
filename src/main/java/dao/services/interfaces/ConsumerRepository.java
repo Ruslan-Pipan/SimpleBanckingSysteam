@@ -1,4 +1,4 @@
-package dao.repositories.interfaces;
+package dao.services.interfaces;
 
 import exceptions.BadVerification;
 import entety.Consumer;
