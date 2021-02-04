@@ -2,6 +2,7 @@ package controllers;
 
 import entety.Consumer;
 import exceptions.BadVerification;
+import service.Cryptography;
 import service.dispatcher.annotations.Controler;
 import service.dispatcher.annotations.Get;
 import service.dispatcher.annotations.Post;
@@ -15,10 +16,14 @@ import static dao.ServiceConstants.CONSUMER_SERVICE;
 public class ControlerPerson {
     @Get("login")
     String login(HttpServletRequest request) throws BadVerification {
-        Consumer consumer = CONSUMER_SERVICE.findConsumerByEmail(request.getParameter("email"));
-        String passReq = request.getParameter("password");
         HttpSession session = request.getSession();
-        if (consumer != null && consumer.getPassword().equals(passReq)){
+
+        String email = request.getParameter("email");
+        String passReq = request.getParameter("password");
+
+        Consumer consumer = CONSUMER_SERVICE.findConsumerByEmail(email);
+
+        if (consumer != null && passReq.equals(consumer.getPassword())){
             session.setAttribute("consumer",consumer);
             return "cabinet.jsp";
         }
