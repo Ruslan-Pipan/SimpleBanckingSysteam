@@ -6,7 +6,9 @@ import entety.Consumer;
 import dao.ConnectionBank;
 import dao.services.interfaces.ConsumerService;
 import dao.ServiceConstants;
+import service.Cryptography;
 import service.Verification;
+
 
 import java.sql.*;
 import java.util.*;
@@ -14,6 +16,7 @@ import java.util.*;
 public class ConsumerServiceImp implements ConsumerService {
 
     private static final String SQL_SELECT_ALL_CONSUMERS = "SELECT * FROM consumer";
+    private static final Cryptography cryptography = Cryptography.instance();
 
     public ConsumerServiceImp() {
 
@@ -42,10 +45,10 @@ public class ConsumerServiceImp implements ConsumerService {
         ){
             preparedStatement.setString(1,consumer.getFirstName());
             preparedStatement.setString(2,consumer.getLastName());
-            preparedStatement.setString(3,consumer.getEmail());
-            preparedStatement.setString(4,consumer.getPhoneNumber());
-            preparedStatement.setString(5,consumer.getPassword());
-            preparedStatement.setString(6,consumer.getAddress());
+            preparedStatement.setString(3,cryptography.encrypt(consumer.getEmail()));
+            preparedStatement.setString(4,cryptography.encrypt(consumer.getPhoneNumber()));
+            preparedStatement.setString(5,cryptography.encrypt(consumer.getPassword()));
+            preparedStatement.setString(6,cryptography.encrypt(consumer.getAddress()));
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException  throwable) {
@@ -57,19 +60,19 @@ public class ConsumerServiceImp implements ConsumerService {
     @Override
     public boolean editConsumerEmail(Consumer consumer) {
         final String SQL = "UPDATE consumer SET email = ? WHERE id = ?";
-        return editBySQL(SQL, consumer.getId(), consumer.getEmail());
+        return editBySQL(SQL, consumer.getId(), cryptography.encrypt(consumer.getEmail()));
     }
 
     @Override
     public boolean editConsumerPhone(Consumer consumer) {
         final String SQL = "UPDATE consumer SET phone_number = ? WHERE id = ?";
-        return editBySQL(SQL,consumer.getId(),consumer.getPhoneNumber());
+        return editBySQL(SQL,consumer.getId(),cryptography.encrypt(consumer.getPhoneNumber()));
     }
 
     @Override
     public boolean editConsumerPassword(Consumer consumer) {
         final String SQL = "UPDATE consumer SET password = ? WHERE id = ?";
-        return editBySQL(SQL,consumer.getId(),consumer.getPassword());
+        return editBySQL(SQL,consumer.getId(),cryptography.encrypt(consumer.getPassword()));
     }
 
     @Override
@@ -134,13 +137,9 @@ public class ConsumerServiceImp implements ConsumerService {
     }
 
     @Override
-    public Consumer findConsumerByEmail(String email) throws BadVerification {
-        boolean flag = Verification.verifyEmail(email);
-        if (flag){
-            final String SQL = "SELECT * FROM consumer WHERE email = '" + email + "';";
-            return giveConsumerBySQL(SQL);
-        }
-        throw new BadVerification("Bad email");
+    public Consumer findConsumerByEmail(String email){
+        final String SQL = "SELECT * FROM consumer WHERE email = '" + cryptography.encrypt(email) + "';";
+        return giveConsumerBySQL(SQL);
     }
 
     private boolean editBySQL(String sql, int id, String updateValue){
@@ -179,14 +178,18 @@ public class ConsumerServiceImp implements ConsumerService {
         String password = resultSet.getString("password");
         String adress = resultSet.getString("adress");
 
-        Consumer consumer = new Consumer.ConsumerBuild(first_name,last_name).setId(id).setEmail(email).setNumber(phone_number).setPass(password).setAddress(adress).build();
-
+        Consumer consumer = new Consumer.ConsumerBuild(first_name,last_name)
+                .setId(id)
+                .setEmail(cryptography.decrypt(email))
+                .setNumber(cryptography.decrypt(phone_number))
+                .setPass(cryptography.decrypt(password))
+                .setAddress(cryptography.decrypt(adress))
+                .build();
         List<Account> list = getAllAccounts(id);
 
         for (Account a:list) {
             consumer.addAccount(a);
         }
-
         return consumer;
     }
 
