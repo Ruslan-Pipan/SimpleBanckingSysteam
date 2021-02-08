@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Controler("")
+@Controler
 public class ControlerAdmin {
 
-    @Post("/last_transaction")
+    @Post("last_transaction")
     String getLastTransactions(HttpServletRequest request){
         HttpSession session =request.getSession();
         TransactionService TS = ServiceConstants.TRANSACTION_SERVICE;
@@ -27,7 +27,7 @@ public class ControlerAdmin {
         return "adminPanel.jsp";
     }
 
-    @Post("/consumerByID")
+    @Post("consumerByID")
      String getConsumer(HttpServletRequest request) throws BadVerification {
         HttpSession session = request.getSession();
         ConsumerService CS = ServiceConstants.CONSUMER_SERVICE;
@@ -35,7 +35,7 @@ public class ControlerAdmin {
         session.setAttribute("consumerAdmin",consumer);
         return "adminPanel.jsp";
     }
-    @Post("/consumers")
+    @Post("consumers")
     String getConsumers(HttpServletRequest request){
         HttpSession session = request.getSession();
         ConsumerService CS = ServiceConstants.CONSUMER_SERVICE;

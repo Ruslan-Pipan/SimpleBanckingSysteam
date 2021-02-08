@@ -1,5 +1,6 @@
 package controllers;
 
+import com.mysql.cj.Session;
 import dao.services.interfaces.AccountService;
 import dao.services.interfaces.TransactionService;
 import entety.Consumer;
@@ -19,10 +20,9 @@ import java.util.List;
 import static dao.ServiceConstants.ACCOUNT_SERVICE;
 import static dao.ServiceConstants.CONSUMER_SERVICE;
 
-@Controler("")
+@Controler
 public class ControlerConsumer {
-
-    @Post("/check_date")
+    @Post("check_date")
     String checkDate(HttpServletRequest request){
         HttpSession session = request.getSession();
         String suma = request.getParameter("suma");
@@ -46,7 +46,7 @@ public class ControlerConsumer {
         return"error.jsp";
     }
 
-    @Post("/sent_money")
+    @Post("sent_money")
     String sentMoney(HttpServletRequest request){
         HttpSession session = request.getSession();
         Account toAccount = (Account) session.getAttribute("toAccount");
@@ -63,7 +63,7 @@ public class ControlerConsumer {
         return "error.jsp";
     }
 
-    @Post("/getTransaction")
+    @Post("getTransaction")
     String getTransactions(HttpServletRequest request){
         TransactionService transactionService = ServiceConstants.TRANSACTION_SERVICE;
         String idAccString = request.getParameter("idAcc");
@@ -74,7 +74,7 @@ public class ControlerConsumer {
         return "cabinet.jsp";
     }
 
-    @Post("/getCheckingAcc")
+    @Post("getCheckingAcc")
     String getCheckingAcc(HttpServletRequest request){
         AccountService<CheckingAccount> service = ServiceConstants.CHECKING_ACCOUNT_SERVICE;
         HttpSession session = request.getSession();
@@ -84,7 +84,7 @@ public class ControlerConsumer {
         return "typeAcc.jsp";
     }
 
-    @Post("/getSavingAcc")
+    @Post("getSavingAcc")
     String getSavingAcc(HttpServletRequest request){
         AccountService<SavingAccount> service = ServiceConstants.SAVING_ACCOUNT_SERVICE;
         HttpSession session = request.getSession();

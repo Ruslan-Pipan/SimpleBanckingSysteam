@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import static dao.ServiceConstants.CONSUMER_SERVICE;
 
-@Controler("/")
+@Controler
 public class ControlerPerson {
     @Get("login")
     String login(HttpServletRequest request) throws BadVerification {

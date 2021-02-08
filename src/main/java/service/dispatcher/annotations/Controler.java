@@ -7,5 +7,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
 public @interface Controler {
-    String value();
+    String value() default "/";
 }
