@@ -6,6 +6,12 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * This annotation needs to mark all methods that responsible for Get request.
+ *
+ * @author Ruslan Pipan
+ * @version 1.0
+ * */
 @Retention(RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Get {

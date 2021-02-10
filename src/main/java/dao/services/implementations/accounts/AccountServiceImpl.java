@@ -10,9 +10,22 @@ import dao.services.interfaces.AccountService;
 import java.sql.*;
 import java.util.List;
 
+/**
+ * Service implements {@link dao.services.interfaces.AccountService} and {@link dao.services.interfaces.AccountRepository}
+ * this service is singleton.
+ * @author Ruslan Pipan
+ * @version 1.3
+ * */
 public class AccountServiceImpl implements AccountService<Account>, AccountRepository<Account> {
+    private static final AccountService<Account> AS = new AccountServiceImpl();
+
+    /** Handler {@link dao.services.implementations.accounts.HandlerService}*/
     private final static HandlerService handler = new HandlerService();
-    public AccountServiceImpl() { }
+
+    private AccountServiceImpl() { }
+
+    /** Get instance.*/
+    public static AccountService<Account> getInstance(){return AS;}
     @Override
     public boolean removeAccount(Account account) {
         String SQL_FOR_DELETE = "DELETE FROM accounts WHERE id = ?";
@@ -53,7 +66,7 @@ public class AccountServiceImpl implements AccountService<Account>, AccountRepos
 
     @Override
     public boolean updateBalance(Account account) {
-        return handler.updateBalance(account,HandlerService.SQL_FOR_UPDATE);
+        return handler.updateBalance(account);
     }
 
     @Override

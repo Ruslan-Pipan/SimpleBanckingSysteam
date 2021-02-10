@@ -45,7 +45,7 @@
         </div>
 
         <div class="cont_form_login">
-          <form action="/login" name="sign_in" method="Get">
+          <form action="/authorization" name="sign_in" method="Get">
             <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
             <h2>Войти</h2>
             <input type="text" name="email" placeholder="E-mail" />
@@ -55,7 +55,7 @@
         </div>
 
         <div class="cont_form_sign_up">
-          <form action="/authorization" name="sign_up" method="Get">
+          <form action="/registering" name="sign_up" method="Get">
           <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
           <h2>Регистрация</h2>
           <input type="email" name="email" placeholder="E-mail" />

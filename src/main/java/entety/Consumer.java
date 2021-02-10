@@ -14,8 +14,10 @@ import java.util.Objects;
 
 
 /**
- * Cunsumers Main class, have in itself class Builder.
- * Builder - help to create.
+ * This class uses builder patterns.
+ *
+ * @author Ruslan Pipan
+ * @version 1.0
  * */
 public class Consumer implements Serializable{
     private static final long serialVersionUID = 1L;

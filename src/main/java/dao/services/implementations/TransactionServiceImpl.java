@@ -6,14 +6,30 @@ import dao.services.interfaces.AccountService;
 import dao.services.interfaces.TransactionService;
 import entety.accounts.Account;
 import entety.accounts.Transaction;
-import dao.ServiceConstants;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service implements {@link dao.services.interfaces.TransactionService}
+ * this service is singleton.
+ * @author Ruslan Pipan
+ * @version 1.0
+ * */
 public class TransactionServiceImpl implements TransactionService {
-    private static final AccountService<Account> acc = new AccountServiceImpl();
+    /**
+     * Account service {@link dao.services.implementations.accounts.AccountServiceImpl}
+     * */
+    private static final AccountService<Account> acc = AccountServiceImpl.getInstance();
+
+    private static final TransactionService TS = new TransactionServiceImpl();
+
+    private TransactionServiceImpl(){}
+    /**
+     * Get instance.
+     * */
+    public static TransactionService getInstance(){return TS;}
     @Override
     public void createTransaction(Transaction transaction) {
         final String SQL = "INSERT INTO transaction(account_to, account_from, money_transfer) VALUES (?,?,?)";
@@ -24,8 +40,8 @@ public class TransactionServiceImpl implements TransactionService {
             preparedStatement.setInt(2,transaction.getAccountFrom().getId());
             preparedStatement.setDouble(3,transaction.getRemittance());
             preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -50,22 +66,26 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getTransactionByAcc(long acc) {
-        Account account = ServiceConstants.ACCOUNT_SERVICE.findAccountByBankAccount(acc);
+        Account account = AccountServiceImpl.getInstance().findAccountByBankAccount(acc);
         return getTransactionById(account.getId());
     }
 
     @Override
     public List<Transaction> getLastSentTransactionByAcc(long acc) {
-        Account account = ServiceConstants.ACCOUNT_SERVICE.findAccountByBankAccount(acc);
+        Account account = AccountServiceImpl.getInstance().findAccountByBankAccount(acc);
         return getLastSentTransactionById(account.getId());
     }
 
     @Override
     public List<Transaction> getLastReceivedTransactionByAcc(long acc) {
-        Account account = ServiceConstants.ACCOUNT_SERVICE.findAccountByBankAccount(acc);
+        Account account = AccountServiceImpl.getInstance().findAccountByBankAccount(acc);
         return getLastReceivedTransactionById(account.getId());
     }
 
+    /**
+     * Get all transactions consumers by sql query.
+     * @param SQL sql query.
+     */
     private List<Transaction> getTransactionBySQL(String SQL){
         List<Transaction> transactions = new ArrayList<>();
         try(Connection connection = ConnectionBank.getConn();
@@ -84,8 +104,8 @@ public class TransactionServiceImpl implements TransactionService {
 
                 transactions.add(transaction);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
         return transactions;
     }

@@ -8,6 +8,12 @@ import exceptions.OverdraftExeption;
 import java.io.Serializable;
 import java.util.Objects;
 
+
+/**
+ * If you want to create new type accounts should to extends {@link entety.accounts.Account}*
+ * @author Ruslan Pipan
+ * @version 1.1
+ * */
 public class Account implements Serializable {
     protected int id;
     protected int idConsumer;
@@ -53,13 +59,13 @@ public class Account implements Serializable {
      * */
     public boolean withdraw(double amt) throws OverdraftExeption {
 
-        if (amt <= balance) {
+        if (amt <= balance && amt > 0) {
             balance -= amt;
             GoodLog.getInstance().log("Monney withdraw");
             return true;
         }
         BadLog.getInstance().log("Monney dont withdraw");
-        return false;
+        throw new OverdraftExeption(amt,"Its over fro your accounts.");
     }
 
     public double getBalance() {

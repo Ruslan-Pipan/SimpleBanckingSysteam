@@ -12,14 +12,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service implements {@link dao.services.interfaces.AccountService} and {@link dao.services.interfaces.AccountRepository}
+ * this service is singleton.
+ * @author Ruslan Pipan
+ * @version 1.3
+ * */
 public class SavingAccountServiceImpl implements AccountService<SavingAccount>, AccountRepository<SavingAccount> {
 
     private final String SQL_FOR_UPDATE = "UPDATE saving_accounts SET balance = ? WHERE id = ?";
+
+    /** Handler {@link dao.services.implementations.accounts.HandlerService}*/
     private final HandlerService handler = new HandlerService();
-    public SavingAccountServiceImpl() {
+    private static AccountService<SavingAccount> AS = new SavingAccountServiceImpl();
 
-    }
-
+    private SavingAccountServiceImpl() { }
+    /** Get instance.*/
+    public static AccountService<SavingAccount> getInstance(){return AS;}
     @Override
     public boolean removeAccount(SavingAccount account) {
         String SQL_FOR_DELETE = "DELETE FROM saving_accounts WHERE id = ?";
@@ -85,18 +94,18 @@ public class SavingAccountServiceImpl implements AccountService<SavingAccount>, 
 
     @Override
     public boolean updateBalance(SavingAccount account) {
-        return handler.updateBalance(account,SQL_FOR_UPDATE);
+        return handler.updateBalance(account);
     }
 
 
     @Override
     public SavingAccount findAccountByBankAccount(long bankAcc) {
-        return getAccBySQL(HandlerService.SQL_WHERE_BANK_ACC + bankAcc);
+        return getSavingAccBySQL(HandlerService.SQL_WHERE_BANK_ACC + bankAcc);
     }
 
     @Override
     public SavingAccount findAccountById(int id) {
-        return getAccBySQL(HandlerService.SQL_WHERE_ID + id);
+        return getSavingAccBySQL(HandlerService.SQL_WHERE_ID + id);
     }
 
     @Override
@@ -129,7 +138,12 @@ public class SavingAccountServiceImpl implements AccountService<SavingAccount>, 
        return findAccountsByConsumer(consumer.getId());
     }
 
-    private SavingAccount getAccBySQL(String SQL_WHERE){
+    /**
+     * Get saving acc by SQL.
+     * Uses {@link dao.services.implementations.accounts.HandlerService} for obtain general account. Whereupon obtain saving acc.
+     * @param SQL_WHERE condition for issuing a record.
+     * */
+    private SavingAccount getSavingAccBySQL(String SQL_WHERE){
         Account account = handler.giveAcc(SQL_WHERE);
         if (account!=null){
             String SQL = "SELECT * FROM saving_acc WHERE id_acc = " + account.getId();
@@ -141,8 +155,8 @@ public class SavingAccountServiceImpl implements AccountService<SavingAccount>, 
                 SavingAccount savingAccount = new SavingAccount(account);
                 savingAccount.setInterestRate(resultSet.getDouble("saving"));
                 return savingAccount;
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
             }
         }
         return null;

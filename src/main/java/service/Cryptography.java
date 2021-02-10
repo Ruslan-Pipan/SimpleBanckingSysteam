@@ -12,14 +12,33 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
+
+
+/**
+ * The class that provides cryptography.
+ * @author Ruslan Pipan
+ * @version 1.0
+ * */
 public class Cryptography {
     private static final String secretKey = "kjhyyujhgr6ip;l";
     private static final String salt = "sssssss1111111";
     private static final Cryptography cr = new Cryptography();
+    /**
+     * It is a singleton.
+     * */
     private Cryptography(){}
 
-    public static Cryptography instance(){return cr;}
+    /**
+     * Get instance Cryptography.
+     * */
+    public static Cryptography getInstance(){return cr;}
 
+    /**
+     * This method provides encrypting data.
+     *
+     * @param toEncrypt the string that has to encrypt.
+     * @return encrypt string.
+     * */
     public String encrypt(String toEncrypt){
         try {
             byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -39,6 +58,12 @@ public class Cryptography {
         }
         return null;
     }
+    /**
+     * This method provides encrypting data.
+     *
+     * @param toDecrypt the string that has to decrypt.
+     * @return decrypt string.
+     * */
     public String decrypt(String toDecrypt){
         try{
             byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

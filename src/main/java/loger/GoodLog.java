@@ -1,12 +1,22 @@
 package loger;
 
-public class GoodLog extends Loger {
-    private static String green = "green";
+/**
+ * This simple relation good log.
+ * @author Ruslan Pipan
+ * @version 1.0
+ * */
+public class GoodLog extends Logger {
+    private static final String green = "green";
     private static final GoodLog goodLog = new GoodLog();
-    protected GoodLog() {
+    /**
+     * It is singleton.
+     * */
+    private GoodLog() {
         super(green);
     }
-
+    /**
+     * Get instance.
+     * */
     public static GoodLog getInstance() {
         return goodLog;
     }

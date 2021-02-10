@@ -7,27 +7,37 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Handler Dispatcher Servlet {@link service.dispatcher.DispatcherServlet}.
+ * @author Ruslan Pipan
+ * @version 1.0
+ * */
 public class DispatcherServletHandler {
 
     private final ControlerAnnotationHandler controlerAnnotationHandler;
     private final GetAnnotationHandler getAnnotationHandler;
     private final PostAnnotationHandler postAnnotationHandler;
-
-
     private final HttpServletRequest req;
-
     private final Method method;
     private final String url;
 
+    /**
+     * Create DispatcherServletHandler.
+     * @param req for filling req, and url.
+     * */
     public DispatcherServletHandler(HttpServletRequest req) {
         this.req = req;
         this.url = req.getRequestURI();
-        this.controlerAnnotationHandler = new ControlerAnnotationHandler();
-        this.getAnnotationHandler = new GetAnnotationHandler();
-        this.postAnnotationHandler = new PostAnnotationHandler();
+        this.controlerAnnotationHandler = ControlerAnnotationHandler.getInstance();
+        this.getAnnotationHandler = GetAnnotationHandler.getInstance();
+        this.postAnnotationHandler = PostAnnotationHandler.getInstance();
         this.method = getMethod(getMapMethodsAndUrl(),url);
     }
 
+    /**
+     * Performs methods Controler which annotated {@link service.dispatcher.annotations.Post} or {@link service.dispatcher.annotations.Get}
+     * @return string which have url to go to another page.
+     **/
     public String invokeMethod(){
         String path = url;
         if (method!=null) {
@@ -42,6 +52,12 @@ public class DispatcherServletHandler {
         return path;
     }
 
+    /**
+     * Get specified method by URL.
+     * @param map take those filing methods and their URL.
+     * @param url url sent by user.
+     * @return Methods which is responsible for processing this URL.
+     * */
     private Method getMethod(Map<Method,String> map, String url){
         Set<Map.Entry<Method, String>> entrySet = map.entrySet();
 
@@ -51,6 +67,9 @@ public class DispatcherServletHandler {
         return null;
     }
 
+    /**
+     * @return map which has methods that need to performs, and URL.
+     * */
     private Map<Method,String> getMapMethodsAndUrl(){
          Map<Class,String> mapClass = new HashMap<>();
          Map<Method,String> methodStringMap = new HashMap<>();

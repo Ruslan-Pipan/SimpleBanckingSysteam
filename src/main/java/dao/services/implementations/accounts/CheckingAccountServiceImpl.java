@@ -11,14 +11,23 @@ import dao.services.interfaces.AccountService;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Service implements {@link dao.services.interfaces.AccountService} and {@link dao.services.interfaces.AccountRepository}
+ * this service is singleton.
+ * @author Ruslan Pipan
+ * @version 1.3
+ * */
 public class CheckingAccountServiceImpl implements AccountService<CheckingAccount>, AccountRepository<CheckingAccount> {
 
     private final String SQL_FOR_UPDATE = "UPDATE accounts SET balance = ? WHERE id = ?";
 
+    /** Handler {@link dao.services.implementations.accounts.HandlerService}*/
     private final HandlerService handler = new HandlerService();
+    private static final AccountService<CheckingAccount> AS = new CheckingAccountServiceImpl();
+    /** Get instance.*/
+    public static AccountService<CheckingAccount> getInstance(){return AS;}
 
-    public CheckingAccountServiceImpl() {
+    private CheckingAccountServiceImpl() {
     }
 
     @Override
@@ -82,7 +91,7 @@ public class CheckingAccountServiceImpl implements AccountService<CheckingAccoun
 
     @Override
     public boolean updateBalance(CheckingAccount account) {
-        return handler.updateBalance(account,SQL_FOR_UPDATE);
+        return handler.updateBalance(account);
     }
 
     @Override
@@ -127,6 +136,11 @@ public class CheckingAccountServiceImpl implements AccountService<CheckingAccoun
         return findAccountsByConsumer(consumer.getId());
     }
 
+    /**
+     * Get saving acc by SQL.
+     * Uses {@link dao.services.implementations.accounts.HandlerService} for obtain general account. Whereupon obtain checkin acc.
+     * @param SQL_WHERE condition for issuing a record.
+     * */
     private CheckingAccount getAccBySQL(String SQL_WHERE){
         Account account = handler.giveAcc(SQL_WHERE);
         if (account!=null){
@@ -139,8 +153,8 @@ public class CheckingAccountServiceImpl implements AccountService<CheckingAccoun
                 CheckingAccount checkingAccount = new CheckingAccount(account);
                 checkingAccount.setOverdraftAmount(resultSet.getDouble("overdraft"));
                 return checkingAccount;
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
             }
         }
         return null;

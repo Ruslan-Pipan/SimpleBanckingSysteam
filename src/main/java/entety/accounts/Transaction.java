@@ -2,6 +2,12 @@ package entety.accounts;
 
 import java.util.Objects;
 
+/**
+ * This class simulation table transaction from MySQL database.
+ *
+ * @author Ruslan Pipan
+ * @version 1.0
+ * */
 public class Transaction {
     private int id;
     private Account accountTo;

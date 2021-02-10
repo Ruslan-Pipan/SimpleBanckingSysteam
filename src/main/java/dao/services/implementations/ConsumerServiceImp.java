@@ -1,26 +1,37 @@
 package dao.services.implementations;
 
+import dao.services.implementations.accounts.AccountServiceImpl;
 import entety.accounts.Account;
 import exceptions.BadVerification;
 import entety.Consumer;
 import dao.ConnectionBank;
 import dao.services.interfaces.ConsumerService;
-import dao.ServiceConstants;
 import service.Cryptography;
-import service.Verification;
 
 
 import java.sql.*;
 import java.util.*;
-
+/**
+ * Service implements {@link dao.services.interfaces.ConsumerService} and {@link dao.services.interfaces.ConsumerRepository}
+ * this service is singleton.
+ * @author Ruslan Pipan
+ * @version 1.1
+ * */
 public class ConsumerServiceImp implements ConsumerService {
 
     private static final String SQL_SELECT_ALL_CONSUMERS = "SELECT * FROM consumer";
-    private static final Cryptography cryptography = Cryptography.instance();
+    /**
+     * {@link service.Cryptography} use for encrypt and decrypt data.
+     * */
+    private static final Cryptography cryptography = Cryptography.getInstance();
+    private static final ConsumerService CS = new ConsumerServiceImp();
 
-    public ConsumerServiceImp() {
+    private ConsumerServiceImp() { }
 
-    }
+    /**
+     * Get instance.
+     * */
+    public static ConsumerService getInstance(){return CS;}
 
     @Override
     public boolean removeConsumer(Consumer consumer) {
@@ -58,21 +69,21 @@ public class ConsumerServiceImp implements ConsumerService {
     }
 
     @Override
-    public boolean editConsumerEmail(Consumer consumer) {
+    public boolean editConsumerEmail(Consumer consumer, String email) {
         final String SQL = "UPDATE consumer SET email = ? WHERE id = ?";
-        return editBySQL(SQL, consumer.getId(), cryptography.encrypt(consumer.getEmail()));
+        return editBySQL(SQL, consumer.getId(), cryptography.encrypt(email));
     }
 
     @Override
-    public boolean editConsumerPhone(Consumer consumer) {
+    public boolean editConsumerPhone(Consumer consumer, String phone) {
         final String SQL = "UPDATE consumer SET phone_number = ? WHERE id = ?";
-        return editBySQL(SQL,consumer.getId(),cryptography.encrypt(consumer.getPhoneNumber()));
+        return editBySQL(SQL,consumer.getId(),cryptography.encrypt(phone));
     }
 
     @Override
-    public boolean editConsumerPassword(Consumer consumer) {
+    public boolean editConsumerPassword(Consumer consumer, String pass) {
         final String SQL = "UPDATE consumer SET password = ? WHERE id = ?";
-        return editBySQL(SQL,consumer.getId(),cryptography.encrypt(consumer.getPassword()));
+        return editBySQL(SQL,consumer.getId(),cryptography.encrypt(pass));
     }
 
     @Override
@@ -127,11 +138,11 @@ public class ConsumerServiceImp implements ConsumerService {
             int id;
             if (resultSet.next()){
                 id = resultSet.getInt("id");
-                return findConsumerById(id);
+                return this.findConsumerById(id);
             }
             throw new BadVerification("");
-        } catch (SQLException  | BadVerification throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException  | BadVerification throwable) {
+            throwable.printStackTrace();
         }
         return null;
     }
@@ -142,6 +153,13 @@ public class ConsumerServiceImp implements ConsumerService {
         return giveConsumerBySQL(SQL);
     }
 
+
+    /**
+     * Edit consumer by SQL.
+     * @param sql sql that will be updated.
+     * @param id id consumer.
+     * @param updateValue updateValue.
+     * */
     private boolean editBySQL(String sql, int id, String updateValue){
         try (Connection connection = ConnectionBank.getConn();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -150,11 +168,15 @@ public class ConsumerServiceImp implements ConsumerService {
             preparedStatement.setInt(2,id);
             preparedStatement.executeUpdate();
             return true;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
         return false;
     }
+    /**
+     * Give consumer by sql.
+     * @param sql sql that will by select.
+     * */
     private Consumer giveConsumerBySQL(String sql)  {
         try (Connection connection = ConnectionBank.getConn();
              Statement statement = connection.createStatement();
@@ -162,13 +184,16 @@ public class ConsumerServiceImp implements ConsumerService {
         ){
             resultSet.next();
             return createConsumer(resultSet);
-        } catch (SQLException  | BadVerification throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException  | BadVerification throwable) {
+            throwable.printStackTrace();
         }
         return new Consumer.ConsumerBuild("0","0").build();
     }
 
-
+    /**
+     * Create consumer and decrypt date.
+     * @param resultSet resultSet with consumer record DB.
+     * */
     private Consumer createConsumer(ResultSet resultSet) throws SQLException, BadVerification {
         int id = resultSet.getInt("id");
         String first_name = resultSet.getString("first_name");
@@ -193,8 +218,10 @@ public class ConsumerServiceImp implements ConsumerService {
         return consumer;
     }
 
-
+    /**
+     * Get all accounts consumers.
+     * */
     private List<Account> getAllAccounts(int consumerId){
-        return ServiceConstants.ACCOUNT_SERVICE.findAccountsByConsumer(consumerId);
+        return AccountServiceImpl.getInstance().findAccountsByConsumer(consumerId);
     }
 }
