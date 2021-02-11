@@ -9,10 +9,15 @@
 ## Web application architecture:
 ![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/web%20application%20architecture.JPG)
 + DispatcherServlet - Receives all requests from the users and redirects to the target controleer.
+
 + AdminController - Handles admin requests such as: get all users, get the user by email, get the lastest account transactions.
+
 + PersonController - Handles person requests such as: authenticatу, registration.
+
 + ConsumerController - Handles consumer requests such as: send money, get transcactions, get checking account, get saving account.
+
 Business logic:
+
 + Entity - 
 + Service - 
 + DAO - 
