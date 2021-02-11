@@ -30,6 +30,9 @@ Business logic:
 
 + Cryptography - Provides encryption and decryption data.
 
+  ## Database architecture:
+![alt]()
+
 ## Tasks: 
 
 + The first task was to create a system that can use Databases MySQL. 
