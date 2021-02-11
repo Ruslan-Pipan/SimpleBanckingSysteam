@@ -66,3 +66,9 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 + The sixth task covered with Junit tests, and fix found mistakes.
 
 + The seventh task consolidate knowledge of Java SE such as: Collections, Generics, SOLID principles, GoF patterns, OOP princeples.
+
+## Example:
++ An example of how I documented  my code:
+
++ An example of how I tested my code:
+
