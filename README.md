@@ -87,3 +87,11 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 ## Web front end:
 
 ![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/front%20end.jpg)
+
+1. Home page for authorization or registration.
+
+1. Account page and manipulation with them.
+
+1. Validation of data of the user to whom it is going to send money.
+
+1. Admin panel.
