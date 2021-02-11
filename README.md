@@ -30,8 +30,8 @@ Business logic:
 
 + Cryptography - Provides encryption and decryption data.
 
-  ## Database architecture:
-![alt]()
+## Database architecture:
+![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/database%20architecture.JPG)
 
 ## Tasks: 
 
