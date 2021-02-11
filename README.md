@@ -5,7 +5,10 @@ This project is a final task from ITVDN. The essence of the project was to conso
 ## About the project itself:
 
 It's a simple imitation Banking system. It has a registration form, user cabinet, and admin pane. 
-Also, implemented three roles access. Data encryption is implemented, SSL protocol, certificate.
+Also, implemented three roles access, data encryption, SSL protocol, certificate.
+
+## Web application architecture:
+![Image alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/web%20application%20architecture.JPG)
 
 ************************
 The first task was to create a system that can use Databases MySQL. 
@@ -28,5 +31,4 @@ The fifth task system should have three security: "Person" should show only inde
 The sixth task covered with Junit tests, and fix found mistakes.
 ***********************
 The seventh task consolidate knowledge of Java SE such as: Collections, Generics, SOLID principles, GoF patterns, OOP princeples.
-![Image alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/web%20application%20architecture.JPG)
 
