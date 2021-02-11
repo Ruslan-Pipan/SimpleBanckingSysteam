@@ -84,7 +84,7 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 
 ![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/example%20controller.JPG)
 
-## Web front end:
+## Web front-end:
 
 ![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/front%20end.jpg)
 
@@ -95,3 +95,6 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 1. Validation of data of the user to whom it is going to send money.
 
 1. Admin panel.
+
+## Conclusion:
+  On this project, I gained knowledge on designing MVC, DAO, GoF patterns. Consolidate in practice OOP, SOLID principles. Also got acquainted with SSL protocol with encryption and certificates.
