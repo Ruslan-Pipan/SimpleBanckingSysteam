@@ -13,26 +13,30 @@ Also, implemented three roles access, data encryption, SSL protocol, certificate
 + AdmineController -
 + PersonController -
 + Business logic - 
-  _ Entity - 
++ Entity - 
++ Service - 
++ DAO - 
++ Handlers - 
++ Verification - 
++ Cryptographt -
 ************************
-The first task was to create a system that can use Databases MySQL. 
+## Tasks:
+1. The first task was to create a system that can use Databases MySQL. 
 The system has will be connected to SQL databases through JDBC which has data about consumers and their accounts. Each consumer can have three different accounts as current account, credit account, and interest account. Implement a system of accounts through inheritance.
 
-*************************
-The second task was to create a system Conroler through Command Patterns.
-Used GoF Command pattern, Command interfaces with single method execute(), CommandFactory with all commands, and separate command on each HTTP request.
+1. The second task was to create a system Conroler through Command Patterns.
+Used GoF Command pattern, Command interfaces with single method execute(), CommandFactory with all commands, and separate command on each HTTP request. 
 
-***********************
-The third task was to rewrite a system Conroler through Command Patterns and create a new DispatcherServlet(like in Spring) with three annotations Controller, Get, Post to be implemented through Reflection.
+1. The third task was to rewrite a system Conroler through Command Patterns and create a new DispatcherServlet(like in Spring) with three annotations Controller, Get, Post to be implemented through Reflection.
 
-Create DispatcherSerlet which has found all controls about marked @Controler annotation, and created a single object and put it to the cache. Classes marked @Conroler should have methods with HTTP requests and marked @Post or @Get.
+1. The fourth task was to create DispatcherSerlet which has found all controls about marked @Controler annotation, and created a single object and put it to the cache. Classes marked @Conroler should have methods with HTTP requests and marked @Post or @Get.
 Annotation @Controler should have the main path, @Post and @Get should have a path on specific requests. At runtime should call the query method, which has an HTTP request.
 
-The fifth task system should have three security: "Person" should show only index pages where can be registered or sign-in. 
+1. The fifth task system should have three security: "Person" should show only index pages where can be registered or sign-in. 
 "Consumer" can enter the cabinet pages where will see his bills, select one of them and transfer money to someone.
-"Admin" can enter the admin panel where hes is can to choose all consumers, the last transactions.
-**********************
-The sixth task covered with Junit tests, and fix found mistakes.
-***********************
-The seventh task consolidate knowledge of Java SE such as: Collections, Generics, SOLID principles, GoF patterns, OOP princeples.
+"Admin" can enter the admin panel where hes is can to choose all consumers, the last transactions. 
+
+1. The sixth task covered with Junit tests, and fix found mistakes.
+
+1. The seventh task consolidate knowledge of Java SE such as: Collections, Generics, SOLID principles, GoF patterns, OOP princeples.
 
