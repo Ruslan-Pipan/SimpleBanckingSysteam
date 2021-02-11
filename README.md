@@ -75,3 +75,7 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 + An example of how I tested my code:
 
 ![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/example%20%20tested%20code.JPG)
+
++ An example of my controller.
+
+![alt]()
