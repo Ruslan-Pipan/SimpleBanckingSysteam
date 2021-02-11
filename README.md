@@ -14,16 +14,21 @@
 
 + PersonController - Handles person requests such as: authenticatу, registration.
 
-+ ConsumerController - Handles consumer requests such as: send money, get transcactions, get checking account, get saving account.
++ ConsumerController - Handles consumer requests such as: send money, get transcactions, get checking accounts, get saving accounts.
 
 Business logic:
 
-+ Entity - 
-+ Service - 
-+ DAO - 
-+ Handlers - 
-+ Verification - 
-+ Cryptography - 
++ Entity - Find all entities such as: Consumer, Account, CheckingAccount, SavingAccount, Transaktion.
+
++ Service - Provide transactions between bank accounts, encryption and decryption of data from the database.
+
++ DAO - The only module that communicates with the database.
+
++ Handlers - The module in which the system of controllers is implemented. 
+
++ Verification - Checking user data for correctness such as: phone number, email, password.
+
++ Cryptography - Provides encryption and decryption data.
 
 ## Tasks: 
 
