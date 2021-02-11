@@ -8,6 +8,7 @@
 
 ## Web application architecture:
 ![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/web%20application%20architecture.JPG)
+
 + DispatcherServlet - Receives all requests from the users and redirects to the target controleer.
 
 + AdminController - Handles admin requests such as: get all users, get the user by email, get the lastest account transactions.
@@ -30,8 +31,20 @@ Business logic:
 
 + Cryptography - Provides encryption and decryption data.
 
-  ## Database architecture:
-![alt]()
+## Database architecture:
+![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/database%20architecture.JPG)
+
++ accounts - The table that contains the basic fields for accounts.
+
++ saving_acc - The table stored specific fields for saving accounts.
+
++ checkin_acc - The table stored specific fields for checkin accounts.
+
++ last_number_acc - The table in which the only record of the last bank account is stored.
+
++ consumers - The table where usears are stored.
+
++ transakctions - The table where account transactions are stored.
 
 ## Tasks: 
 
@@ -53,3 +66,9 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 + The sixth task covered with Junit tests, and fix found mistakes.
 
 + The seventh task consolidate knowledge of Java SE such as: Collections, Generics, SOLID principles, GoF patterns, OOP princeples.
+
+## Example:
++ An example of how I documented  my code:
+
++ An example of how I tested my code:
+
