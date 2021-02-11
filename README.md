@@ -1,10 +1,10 @@
 # SimpleBanckingSysteam
 
 ## Summary:
-  +This project is a final task from ITVDN. The essence of the project was to consolidate skills in technologies: JavaEE, Servlet, JSF, Tomcat, Maven, Junit, Hibernate, JDBC, SQL, MySQL, PostgreSQL, Collections, Generics, Reflection, OOP princeples, SOLID principles.
+  This project is a final task from ITVDN. The essence of the project was to consolidate skills in technologies: JavaEE, Servlet, JSF, Tomcat, Maven, Junit, Hibernate, JDBC, SQL, MySQL, PostgreSQL, Collections, Generics, Reflection, OOP princeples, SOLID principles.
 
 ## About the project itself:
-  +It's  a simple imitation Banking system. It has a registration form, user cabinet, and admin pane. Implemented three roles of access, enryption of user data in the database, protocol SSL, certificates.
+  It's  a simple imitation Banking system. It has a registration form, user cabinet, and admin pane. Implemented three roles of access, enryption of user data in the database, protocol SSL, certificates.
 
 ## Web application architecture:
 ![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/web%20application%20architecture.JPG)
@@ -12,7 +12,7 @@
 + AdminController - 
 + PersonController -
 + ConsumerController - 
-Business logic
+Business logic:
 + Entity - 
 + Service - 
 + DAO - 
