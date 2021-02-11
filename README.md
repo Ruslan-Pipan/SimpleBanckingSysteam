@@ -67,6 +67,10 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 
 + The seventh task consolidate knowledge of Java SE such as: Collections, Generics, SOLID principles, GoF patterns, OOP princeples.
 
+## Folder structure:
+
+![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/program%20structure.JPG)
+
 ## Example:
 + An example of how I documented  my code:
 
@@ -78,4 +82,4 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 
 + An example of my controller.
 
-![alt]()
+![alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/screenshot/example%20controller.JPG)
