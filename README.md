@@ -10,6 +10,10 @@ Also, implemented three roles access, data encryption, SSL protocol, certificate
 ## Web application architecture:
 ![Image alt](https://github.com/Ruslan-Pipan/SimpleBanckingSysteam/blob/master/web%20application%20architecture.JPG)
 + DispatcherServlet - 
++ AdmineController -
++ PersonController -
++ Business logic - 
+  _ Entity - 
 ************************
 The first task was to create a system that can use Databases MySQL. 
 The system has will be connected to SQL databases through JDBC which has data about consumers and their accounts. Each consumer can have three different accounts as current account, credit account, and interest account. Implement a system of accounts through inheritance.
