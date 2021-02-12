@@ -96,5 +96,5 @@ Annotation @Controler should have the main path, @Post and @Get should have a pa
 
 1. Admin panel.
 
-## Conclusion:
+## To summarize :
   On this project, I gained knowledge on designing MVC, DAO, GoF patterns. Consolidate in practice OOP, SOLID principles. Also got acquainted with SSL protocol with encryption and certificates.
